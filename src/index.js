@@ -83,7 +83,7 @@ app.post('/users', (req, res) => {
   }
   client
     .index({
-      index: 'getopsreact',
+      index: process.env.ELASTICSEARCH_INDEX,
       type: 'user',
       body: req.body
     })
