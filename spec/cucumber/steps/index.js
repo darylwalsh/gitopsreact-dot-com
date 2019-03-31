@@ -1,7 +1,14 @@
 import assert from 'assert'
 import superagent from 'superagent'
+import elasticsearch from 'elasticsearch'
 import { When, Then } from 'cucumber'
 import { getValidPayload, convertStringToArray } from './utils'
+
+const client = new elasticsearch.Client({
+  host: `${process.env.ELASTICSEARCH_PROTOCOL}://${
+    process.env.ELASTICSEARCH_HOSTNAME
+  }:${process.env.ELASTICSEARCH_PORT}`
+})
 
 When(
   /^the client creates a (GET|POST|PATCH|PUT|DELETE|OPTIONS|HEAD) request to ([/\w-:.]+)$/,
@@ -124,3 +131,41 @@ When(
       .set('Content-Type', 'application/json')
   }
 )
+
+When(/^attaches a valid (.+) payload$/, function(payloadType) {
+  this.requestPayload = getValidPayload(payloadType)
+  this.request
+    .send(JSON.stringify(this.requestPayload))
+    .set('Content-Type', 'application/json')
+})
+
+Then(
+  /^the payload object should be added to the database, grouped under the "([a-zA-Z]+)" type$/,
+  function(type, callback) {
+    this.type = type
+    client
+      .get({
+        index: process.env.ELASTICSEARCH_INDEX,
+        type,
+        id: this.responsePayload
+      })
+      .then(result => {
+        assert.deepEqual(result._source, this.requestPayload)
+        callback()
+      })
+      .catch(callback)
+  }
+)
+Then('the newly-created user should be deleted', function(callback) {
+  client
+    .delete({
+      index: process.env.ELASTICSEARCH_INDEX,
+      type: this.type,
+      id: this.responsePayload
+    })
+    .then(function(res) {
+      assert.equal(res.result, 'deleted')
+      callback()
+    })
+    .catch(callback)
+})
