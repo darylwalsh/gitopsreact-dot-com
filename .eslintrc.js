@@ -31,7 +31,7 @@ module.exports = {
     'function-paren-newline': 'off', // Incompatible with prettier
     'no-plusplus': 'off',
     'space-before-function-paren': 0, // Incompatible with prettier
-    'no-underscore-dangle': [2, { allow: [] }],
+    'no-underscore-dangle': 'off',
 
     'max-len': [
       'error',

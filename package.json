@@ -10,7 +10,7 @@
     "precommit": "npm run lint",
     "serve": "npm run build && dotenv node dist/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "test:e2e": "dotenv ./node_modules/.bin/cucumber-js -- spec/cucumber/features --require-module @babel/register --require spec/cucumber/steps",
+    "test:e2e": "dotenv -e test.env -e .env ./node_modules/.bin/cucumber-js -- spec/cucumber/features --require-module @babel/register --require spec/cucumber/steps",
     "watch": "nodemon -w src --exec npm run serve"
   },
   "repository": {
