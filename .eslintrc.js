@@ -14,6 +14,18 @@ module.exports = {
       jsx: true
     }
   },
+  overrides: [
+    {
+      files: ['*.test.js'],
+      env: {
+        mocha: true
+      },
+      rules: {
+        'func-names': 'off',
+        'prefer-arrow-callback': 'off'
+      }
+    }
+  ],
   rules: {
     quotes: [2, 'single'],
     strict: [2, 'never'],
