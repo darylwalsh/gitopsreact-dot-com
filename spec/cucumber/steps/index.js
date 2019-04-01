@@ -1,7 +1,8 @@
 import assert from 'assert'
 import superagent from 'superagent'
-import elasticsearch from 'elasticsearch'
 import { When, Then } from 'cucumber'
+import elasticsearch from 'elasticsearch'
+
 import { getValidPayload, convertStringToArray } from './utils'
 
 const client = new elasticsearch.Client({
@@ -24,13 +25,13 @@ When(/^attaches a generic (.+) payload$/, function(payloadType) {
   switch (payloadType) {
     case 'malformed':
       this.request
-        .send('{"email": "bfc@freestabby.com", name: }')
+        .send('{"email": "dan@danyll.com", name: }')
         .set('Content-Type', 'application/json')
       break
     case 'non-JSON':
       this.request
         .send(
-          '<?xml version="1.0" encoding="UTF-8" ?><email>bfc@freestabby.com</email>'
+          '<?xml version="1.0" encoding="UTF-8" ?><email>dan@danyll.com</email>'
         )
         .set('Content-Type', 'text/xml')
       break
@@ -161,7 +162,7 @@ Then(
     client
       .get({
         index: process.env.ELASTICSEARCH_INDEX,
-        type: this.type,
+        type,
         id: this.responsePayload
       })
       .then(result => {
@@ -171,6 +172,7 @@ Then(
       .catch(callback)
   }
 )
+
 Then('the newly-created user should be deleted', function(callback) {
   client
     .delete({
@@ -183,4 +185,9 @@ Then('the newly-created user should be deleted', function(callback) {
       callback()
     })
     .catch(callback)
+})
+
+When(/^attaches (.+) as the payload$/, function(payload) {
+  this.requestPayload = JSON.parse(payload)
+  this.request.send(payload).set('Content-Type', 'application/json')
 })
