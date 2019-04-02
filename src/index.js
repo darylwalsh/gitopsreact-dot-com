@@ -9,11 +9,16 @@ import checkContentTypeIsJson from './middleware/check-content-type-is-json'
 import errorHandler from './middleware/error-handler'
 
 import ValidationError from './validators/errors/validation-error'
+import createUserValidator from './validators/users/create'
 import injectHandlerDependencies from './utils/inject-handler-dependencies'
 import createUserEngine from './engines/users/create'
 import createUser from './handlers/users/create'
 
 const handlerToEngineMap = new Map([[createUserHandler, createUserEngine]])
+
+const handlerToValidatorMap = new Map([
+  [createUserHandler, createUserValidator]
+])
 
 const client = new elasticsearch.Client({
   host: `${process.env.ELASTICSEARCH_PROTOCOL}://${
@@ -33,6 +38,7 @@ app.post(
     createUser,
     client,
     handlerToEngineMap,
+    handlerToValidatorMap,
     ValidationError
   )
 )
