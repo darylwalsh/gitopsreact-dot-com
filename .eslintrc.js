@@ -27,7 +27,7 @@ module.exports = {
     }
   ],
   rules: {
-    quotes: [2, 'single'],
+    quotes: [2, 'single', { allowTemplateLiterals: true }],
     strict: [2, 'never'],
     'comma-dangle': ['error', 'only-multiline'],
     indent: ['error', 2, { SwitchCase: 1, MemberExpression: 1 }],
