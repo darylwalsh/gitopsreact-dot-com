@@ -1,8 +1,5 @@
-import ValidationError from '../../validators/errors/validation-error'
-import create from '../../engines/users/create'
-
-function createUser(req, res, db) {
-  create(req, db)
+function createUser(req, res, db, create, validator, ValidationError) {
+  return create(req, db, validator, ValidationError)
     .then(
       result => {
         res.status(201)
@@ -15,7 +12,7 @@ function createUser(req, res, db) {
           res.set('Content-Type', 'application/json')
           return res.json({ message: err.message })
         }
-        return undefined
+        throw err
       }
     )
     .catch(() => {

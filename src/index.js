@@ -8,9 +8,12 @@ import checkContentTypeIsSet from './middleware/check-content-type-is-set'
 import checkContentTypeIsJson from './middleware/check-content-type-is-json'
 import errorHandler from './middleware/error-handler'
 
+import ValidationError from './validators/errors/validation-error'
 import injectHandlerDependencies from './utils/inject-handler-dependencies'
-
+import createUserEngine from './engines/users/create'
 import createUser from './handlers/users/create'
+
+const handlerToEngineMap = new Map([[createUserHandler, createUserEngine]])
 
 const client = new elasticsearch.Client({
   host: `${process.env.ELASTICSEARCH_PROTOCOL}://${
@@ -24,7 +27,15 @@ app.use(checkContentTypeIsSet)
 app.use(checkContentTypeIsJson)
 app.use(bodyParser.json({ limit: 1e6 }))
 
-app.post('/users', injectHandlerDependencies(createUser, client))
+app.post(
+  '/users',
+  injectHandlerDependencies(
+    createUser,
+    client,
+    handlerToEngineMap,
+    ValidationError
+  )
+)
 
 app.use(errorHandler)
 
