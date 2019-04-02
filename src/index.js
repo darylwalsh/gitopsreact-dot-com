@@ -12,7 +12,7 @@ import ValidationError from './validators/errors/validation-error'
 import createUserValidator from './validators/users/create'
 import injectHandlerDependencies from './utils/inject-handler-dependencies'
 import createUserEngine from './engines/users/create'
-import createUser from './handlers/users/create'
+import createUserHandler from './handlers/users/create'
 
 const handlerToEngineMap = new Map([[createUserHandler, createUserEngine]])
 
@@ -35,7 +35,7 @@ app.use(bodyParser.json({ limit: 1e6 }))
 app.post(
   '/users',
   injectHandlerDependencies(
-    createUser,
+    createUserHandler,
     client,
     handlerToEngineMap,
     handlerToValidatorMap,

@@ -1,7 +1,7 @@
 function injectHandlerDependencies(
   handler,
   db,
-  handerToEngineMap,
+  handlerToEngineMap,
   handlerToValidatorMap,
   ValidationError
 ) {
