@@ -8,13 +8,22 @@ import checkContentTypeIsSet from './middleware/check-content-type-is-set'
 import checkContentTypeIsJson from './middleware/check-content-type-is-json'
 import errorHandler from './middleware/error-handler'
 
-import ValidationError from './validators/errors/validation-error'
-import createUserValidator from './validators/users/create'
 import injectHandlerDependencies from './utils/inject-handler-dependencies'
+import ValidationError from './validators/errors/validation-error'
+
+// Create User
+import createUserValidator from './validators/users/create'
 import createUserEngine from './engines/users/create'
 import createUserHandler from './handlers/users/create'
 
-const handlerToEngineMap = new Map([[createUserHandler, createUserEngine]])
+// Retrieve User
+import retrieveUserEngine from './engines/users/retrieve'
+import retrieveUserHandler from './handlers/users/retrieve'
+
+const handlerToEngineMap = new Map([
+  [createUserHandler, createUserEngine],
+  [retrieveUserHandler, retrieveUserEngine]
+])
 
 const handlerToValidatorMap = new Map([
   [createUserHandler, createUserValidator]
@@ -42,7 +51,16 @@ app.post(
     ValidationError
   )
 )
-
+app.get(
+  '/users/:userId',
+  injectHandlerDependencies(
+    retrieveUserHandler,
+    client,
+    handlerToEngineMap,
+    handlerToValidatorMap,
+    ValidationError
+  )
+)
 app.use(errorHandler)
 
 app.listen(process.env.SERVER_PORT, () => {
