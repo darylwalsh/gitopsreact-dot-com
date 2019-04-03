@@ -29,16 +29,30 @@ import searchUserEngine from './engines/users/search'
 import searchUserValidator from './validators/users/search'
 import searchUserHandler from './handlers/users/search'
 
+// Update Profile
+import updateProfileEngine from './engines/profile/update'
+import updateProfileValidator from './validators/profile/update'
+import updateUserHandler from './handlers/profile/update'
+
+// Replace Profile
+import replaceProfileEngine from './engines/profile/replace'
+import replaceProfileValidator from './validators/profile/replace'
+import replaceProfileHandler from './handlers/profile/replace'
+
 const handlerToEngineMap = new Map([
   [createUserHandler, createUserEngine],
   [retrieveUserHandler, retrieveUserEngine],
   [deleteUserHandler, deleteUserEngine],
   [searchUserHandler, searchUserEngine],
+  [replaceProfileHandler, replaceProfileEngine],
+  [updateProfileHandler, updateProfileEngine],
 ])
 
 const handlerToValidatorMap = new Map([
   [createUserHandler, createUserValidator],
   [searchUserHandler, searchUserValidator],
+  [replaceProfileHandler, replaceProfileValidator],
+  [updateProfileHandler, updateProfileValidator],
 ])
 
 const client = new elasticsearch.Client({
@@ -87,6 +101,26 @@ app.get(
   '/users/',
   injectHandlerDependencies(
     searchUserHandler,
+    client,
+    handlerToEngineMap,
+    handlerToValidatorMap,
+    ValidationError
+  )
+)
+app.put(
+  '/users/:userId/profile',
+  injectHandlerDependencies(
+    replaceProfileHandler,
+    client,
+    handlerToEngineMap,
+    handlerToValidatorMap,
+    ValidationError
+  )
+)
+app.patch(
+  '/users/:userId/profile',
+  injectHandlerDependencies(
+    updateProfileHandler,
     client,
     handlerToEngineMap,
     handlerToValidatorMap,
