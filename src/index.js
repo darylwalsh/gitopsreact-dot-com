@@ -20,9 +20,14 @@ import createUserHandler from './handlers/users/create'
 import retrieveUserEngine from './engines/users/retrieve'
 import retrieveUserHandler from './handlers/users/retrieve'
 
+// Delete User
+import deleteUserEngine from './engines/users/delete'
+import deleteUserHandler from './handlers/users/delete'
+
 const handlerToEngineMap = new Map([
   [createUserHandler, createUserEngine],
-  [retrieveUserHandler, retrieveUserEngine]
+  [retrieveUserHandler, retrieveUserEngine],
+  [deleteUserHandler, deleteUserEngine]
 ])
 
 const handlerToValidatorMap = new Map([
@@ -55,6 +60,16 @@ app.get(
   '/users/:userId',
   injectHandlerDependencies(
     retrieveUserHandler,
+    client,
+    handlerToEngineMap,
+    handlerToValidatorMap,
+    ValidationError
+  )
+)
+app.delete(
+  '/users/:userId',
+  injectHandlerDependencies(
+    deleteUserHandler,
     client,
     handlerToEngineMap,
     handlerToValidatorMap,
