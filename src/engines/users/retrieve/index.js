@@ -3,7 +3,7 @@ function retrieve(req, db) {
     .get({
       index: process.env.ELASTICSEARCH_INDEX,
       type: 'user',
-      id: req.params.userId
+      id: req.params.userId,
     })
     .then(res => res._source)
     .catch(err => {

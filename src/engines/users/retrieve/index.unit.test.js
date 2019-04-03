@@ -5,8 +5,8 @@ import retrieve from '.'
 const TEST_USER_ID = 'TEST_USER_ID'
 const req = {
   params: {
-    userId: TEST_USER_ID
-  }
+    userId: TEST_USER_ID,
+  },
 }
 
 describe('Engine - User - Retrieve', function() {
@@ -15,7 +15,7 @@ describe('Engine - User - Retrieve', function() {
   describe('When invoked', function() {
     beforeEach(function() {
       db = {
-        get: generateESClientGetStub.success()
+        get: generateESClientGetStub.success(),
       }
       return retrieve(req, db)
     })
@@ -24,14 +24,14 @@ describe('Engine - User - Retrieve', function() {
       assert.deepEqual(db.get.getCall(0).args[0], {
         index: process.env.ELASTICSEARCH_INDEX,
         type: 'user',
-        id: TEST_USER_ID
+        id: TEST_USER_ID,
       })
     })
   })
   describe('When the client.get operation is successful', function() {
     beforeEach(function() {
       db = {
-        get: generateESClientGetStub.success()
+        get: generateESClientGetStub.success(),
       }
       promise = retrieve(req, db)
     })
@@ -43,7 +43,7 @@ describe('Engine - User - Retrieve', function() {
     describe('Because the user does not exists', function() {
       beforeEach(function() {
         db = {
-          get: generateESClientGetStub.notFound()
+          get: generateESClientGetStub.notFound(),
         }
         promise = retrieve(req, db)
       })
@@ -57,7 +57,7 @@ describe('Engine - User - Retrieve', function() {
     describe('Because of other errors', function() {
       beforeEach(function() {
         db = {
-          get: generateESClientGetStub.failure()
+          get: generateESClientGetStub.failure(),
         }
         promise = retrieve(req, db)
       })

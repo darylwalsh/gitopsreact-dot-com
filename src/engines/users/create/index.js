@@ -6,7 +6,7 @@ function create(req, db, validator, ValidationError) {
   return db.index({
     index: process.env.ELASTICSEARCH_INDEX,
     type: 'user',
-    body: req.body
+    body: req.body,
   })
 }
 

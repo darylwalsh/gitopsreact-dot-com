@@ -7,7 +7,7 @@ const ES_SEARCH_RESULTS = {
     total: 5,
     successful: 5,
     skipped: 0,
-    failed: 0
+    failed: 0,
   },
   hits: {
     total: 2,
@@ -24,12 +24,12 @@ const ES_SEARCH_RESULTS = {
             name: {
               first: 'first',
               last: 'last',
-              middle: 'middle'
+              middle: 'middle',
             },
             summary: 'Sample Summary 1',
-            bio: 'Sample Bio 1'
-          }
-        }
+            bio: 'Sample Bio 1',
+          },
+        },
       },
       {
         _index: 'test',
@@ -40,12 +40,12 @@ const ES_SEARCH_RESULTS = {
           email: 'foo@bar.baz',
           profile: {
             summary: 'Sample Summary 2',
-            bio: 'Sample Bio 2'
-          }
-        }
-      }
-    ]
-  }
+            bio: 'Sample Bio 2',
+          },
+        },
+      },
+    ],
+  },
 }
 const SEARCH_REJECT_ERROR = new Error()
 
@@ -55,7 +55,7 @@ const generate = {
   },
   failure() {
     return stub().returns(Promise.reject(SEARCH_REJECT_ERROR))
-  }
+  },
 }
 
 export { generate as default, ES_SEARCH_RESULTS }

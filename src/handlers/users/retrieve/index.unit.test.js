@@ -2,7 +2,7 @@ import assert from 'assert'
 import { match } from 'sinon'
 import generateResSpy from '../../../tests/spies/res'
 import generateRetrieveUserStubs, {
-  RETRIEVE_USER_RESPONSE_OBJECT
+  RETRIEVE_USER_RESPONSE_OBJECT,
 } from '../../../tests/stubs/engines/users/retrieve'
 import retrieve from '.'
 

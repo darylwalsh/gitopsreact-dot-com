@@ -14,7 +14,7 @@ const generate = {
   },
   failure() {
     return stub().returns(Promise.reject(DELETE_REJECT_ERROR))
-  }
+  },
 }
 
 export { generate as default }

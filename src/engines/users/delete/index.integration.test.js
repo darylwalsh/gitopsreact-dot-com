@@ -5,18 +5,18 @@ import del from '.'
 const USER_ID = 'TEST_USER_ID'
 const USER_OBJ = {
   email: 'e@ma.il',
-  password: 'hunter2'
+  password: 'hunter2',
 }
 
 const db = new elasticsearch.Client({
   host: `${process.env.ELASTICSEARCH_PROTOCOL}://${
     process.env.ELASTICSEARCH_HOSTNAME
-  }:${process.env.ELASTICSEARCH_PORT}`
+  }:${process.env.ELASTICSEARCH_PORT}`,
 })
 const req = {
   params: {
-    userId: USER_ID
-  }
+    userId: USER_ID,
+  },
 }
 
 describe('Engine - User - Delete', function() {
@@ -41,7 +41,7 @@ describe('Engine - User - Delete', function() {
           type: 'user',
           id: USER_ID,
           body: USER_OBJ,
-          refresh: true
+          refresh: true,
         })
         .then(() => del(req, db))
       return promise

@@ -24,20 +24,27 @@ import retrieveUserHandler from './handlers/users/retrieve'
 import deleteUserEngine from './engines/users/delete'
 import deleteUserHandler from './handlers/users/delete'
 
+// Search User
+import searchUserEngine from './engines/users/search'
+import searchUserValidator from './validators/users/search'
+import searchUserHandler from './handlers/users/search'
+
 const handlerToEngineMap = new Map([
   [createUserHandler, createUserEngine],
   [retrieveUserHandler, retrieveUserEngine],
-  [deleteUserHandler, deleteUserEngine]
+  [deleteUserHandler, deleteUserEngine],
+  [searchUserHandler, searchUserEngine],
 ])
 
 const handlerToValidatorMap = new Map([
-  [createUserHandler, createUserValidator]
+  [createUserHandler, createUserValidator],
+  [searchUserHandler, searchUserValidator],
 ])
 
 const client = new elasticsearch.Client({
   host: `${process.env.ELASTICSEARCH_PROTOCOL}://${
     process.env.ELASTICSEARCH_HOSTNAME
-  }:${process.env.ELASTICSEARCH_PORT}`
+  }:${process.env.ELASTICSEARCH_PORT}`,
 })
 const app = express()
 
@@ -76,11 +83,30 @@ app.delete(
     ValidationError
   )
 )
+app.get(
+  '/users/',
+  injectHandlerDependencies(
+    searchUserHandler,
+    client,
+    handlerToEngineMap,
+    handlerToValidatorMap,
+    ValidationError
+  )
+)
 app.use(errorHandler)
 
-app.listen(process.env.SERVER_PORT, () => {
+const server = app.listen(process.env.SERVER_PORT, async () => {
+  const indexParams = { index: process.env.ELASTICSEARCH_INDEX }
+  const indexExists = await client.indices.exists(indexParams)
+  if (!indexExists) {
+    await client.indices.create(indexParams)
+  }
   // eslint-disable-next-line no-console
-  console.log(
-    `gitopsreact API server listening on port ${process.env.SERVER_PORT}!`
-  )
+  console.log(`Hobnob API server listening on port ${process.env.SERVER_PORT}!`)
+})
+
+process.on('SIGTERM', () => {
+  server.close(() => {
+    process.exit(0)
+  })
 })

@@ -5,7 +5,7 @@ function generateResSpy() {
     status: spy(),
     set: spy(),
     json: spy(),
-    send: spy()
+    send: spy(),
   }
 }
 

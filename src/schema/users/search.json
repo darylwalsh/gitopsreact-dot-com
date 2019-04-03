@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "$id": "http://api.gitopsreact.social/schemas/users/search.json",
+  "title": "Search User Schema",
+  "description": "For validating client-provided search user object",
+  "type": "object",
+  "properties": {
+    "query": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false
+}

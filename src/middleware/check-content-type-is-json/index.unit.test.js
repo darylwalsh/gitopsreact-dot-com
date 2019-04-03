@@ -16,14 +16,14 @@ describe('checkContentTypeIsJson', function() {
     beforeEach(function() {
       req = {
         headers: {
-          'content-type': 'application/xml'
-        }
+          'content-type': 'application/xml',
+        },
       }
       resJsonReturnValue = {}
       res = {
         status: spy(),
         set: spy(),
-        json: stub().returns(resJsonReturnValue)
+        json: stub().returns(resJsonReturnValue),
       }
       next = spy()
       returnedValue = checkContentTypeIsJson(req, res, next)
@@ -54,7 +54,7 @@ describe('checkContentTypeIsJson', function() {
         assert(
           res.json.calledWithExactly({
             message:
-              'The "Content-Type" header must always be "application/json"'
+              'The "Content-Type" header must always be "application/json"',
           })
         )
       })
@@ -73,8 +73,8 @@ describe('checkContentTypeIsJson', function() {
     beforeEach(function() {
       req = {
         headers: {
-          'content-type': 'application/json; charset=utf-8'
-        }
+          'content-type': 'application/json; charset=utf-8',
+        },
       }
       res = {}
       clonedRes = deepClone(res)

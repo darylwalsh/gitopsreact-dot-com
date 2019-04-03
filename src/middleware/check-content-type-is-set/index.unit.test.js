@@ -13,8 +13,8 @@ describe('checkContentTypeIsSet', function() {
     beforeEach(function() {
       req = {
         headers: {
-          'content-length': '0'
-        }
+          'content-length': '0',
+        },
       }
       res = {}
       next = spy()
@@ -36,8 +36,8 @@ describe('checkContentTypeIsSet', function() {
         req = {
           headers: {
             'content-length': '1',
-            'content-type': 'foo'
-          }
+            'content-type': 'foo',
+          },
         }
         res = {}
         next = spy()
@@ -60,14 +60,14 @@ describe('checkContentTypeIsSet', function() {
       beforeEach(function() {
         req = {
           headers: {
-            'content-length': '1'
-          }
+            'content-length': '1',
+          },
         }
         resJsonReturnValue = {}
         res = {
           status: spy(),
           set: spy(),
-          json: stub().returns(resJsonReturnValue)
+          json: stub().returns(resJsonReturnValue),
         }
         next = spy()
         returnedValue = checkContentTypeIsSet(req, res, next)
@@ -99,7 +99,7 @@ describe('checkContentTypeIsSet', function() {
           assert(
             res.json.calledWithExactly({
               message:
-                'The "Content-Type" header must be set for requests with a non-empty payload'
+                'The "Content-Type" header must be set for requests with a non-empty payload',
             })
           )
         })

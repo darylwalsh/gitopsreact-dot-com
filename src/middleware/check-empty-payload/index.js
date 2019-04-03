@@ -6,7 +6,7 @@ function checkEmptyPayload(req, res, next) {
     res.status(400)
     res.set('Content-Type', 'application/json')
     return res.json({
-      message: 'Payload should not be empty'
+      message: 'Payload should not be empty',
     })
   }
   return next()

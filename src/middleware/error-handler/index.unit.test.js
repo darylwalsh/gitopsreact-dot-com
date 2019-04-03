@@ -107,7 +107,7 @@ describe('errorHandler', function() {
       res = {
         status: spy(),
         set: spy(),
-        json: stub().returns(resJsonReturnValue)
+        json: stub().returns(resJsonReturnValue),
       }
       next = spy()
       returnedValue = errorHandler(err, req, res, next)
@@ -138,7 +138,7 @@ describe('errorHandler', function() {
       it('with the correct error object', function() {
         assert(
           res.json.calledWithExactly({
-            message: 'Payload should be in JSON format'
+            message: 'Payload should be in JSON format',
           })
         )
       })

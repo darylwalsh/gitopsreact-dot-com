@@ -8,9 +8,9 @@ describe('generateValidationErrorMessage', function() {
         keyword: 'required',
         dataPath: '.test.path',
         params: {
-          missingProperty: 'property'
-        }
-      }
+          missingProperty: 'property',
+        },
+      },
     ]
     const actualErrorMessage = generateValidationErrorMessage(errors)
     const expectedErrorMessage = `The '.test.path.property' field is missing`
@@ -22,9 +22,9 @@ describe('generateValidationErrorMessage', function() {
         keyword: 'type',
         dataPath: '.test.path',
         params: {
-          type: 'string'
-        }
-      }
+          type: 'string',
+        },
+      },
     ]
     const actualErrorMessage = generateValidationErrorMessage(errors)
     const expectedErrorMessage = `The '.test.path' field must be of type string`
@@ -36,9 +36,9 @@ describe('generateValidationErrorMessage', function() {
         keyword: 'format',
         dataPath: '.test.path',
         params: {
-          format: 'email'
-        }
-      }
+          format: 'email',
+        },
+      },
     ]
     const actualErrorMessage = generateValidationErrorMessage(errors)
     const expectedErrorMessage = `The '.test.path' field must be a valid email`
@@ -50,9 +50,9 @@ describe('generateValidationErrorMessage', function() {
         keyword: 'additionalProperties',
         dataPath: '.test.path',
         params: {
-          additionalProperty: 'email'
-        }
-      }
+          additionalProperty: 'email',
+        },
+      },
     ]
     const actualErrorMessage = generateValidationErrorMessage(errors)
     const expectedErrorMessage = `The '.test.path' object does not support the field 'email'`

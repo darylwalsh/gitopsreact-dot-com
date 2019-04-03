@@ -36,8 +36,8 @@ describe('checkEmptyPayload', function() {
           req = {
             method,
             headers: {
-              'content-length': '1'
-            }
+              'content-length': '1',
+            },
           }
           res = {}
           next = spy()
@@ -61,14 +61,14 @@ describe('checkEmptyPayload', function() {
           req = {
             method,
             headers: {
-              'content-length': '0'
-            }
+              'content-length': '0',
+            },
           }
           resJsonReturnValue = {}
           res = {
             status: spy(),
             set: spy(),
-            json: stub().returns(resJsonReturnValue)
+            json: stub().returns(resJsonReturnValue),
           }
           next = spy()
           returnedValue = checkEmptyPayload(req, res, next)
@@ -101,7 +101,7 @@ describe('checkEmptyPayload', function() {
           it('with the correct error object', function() {
             assert(
               res.json.calledWithExactly({
-                message: 'Payload should not be empty'
+                message: 'Payload should not be empty',
               })
             )
           })

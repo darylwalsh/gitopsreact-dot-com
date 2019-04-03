@@ -5,8 +5,8 @@ import del from '.'
 const TEST_USER_ID = 'TEST_USER_ID'
 const req = {
   params: {
-    userId: TEST_USER_ID
-  }
+    userId: TEST_USER_ID,
+  },
 }
 let db
 let promise
@@ -23,7 +23,7 @@ describe('Engine - User - Delete', function() {
       assert.deepEqual(db.delete.getCall(0).args[0], {
         index: process.env.ELASTICSEARCH_INDEX,
         type: 'user',
-        id: TEST_USER_ID
+        id: TEST_USER_ID,
       })
     })
   })

@@ -16,7 +16,7 @@ function del(req, res, db, engine) {
         res.set('Content-Type', 'application/json')
         return res.json({
           message:
-            'Permission Denied. Can only delete yourself, not other users.'
+            'Permission Denied. Can only delete yourself, not other users.',
         })
       }
       res.status(500)

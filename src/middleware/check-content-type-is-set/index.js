@@ -4,7 +4,7 @@ function checkContentTypeIsSet(req, res, next) {
     res.set('Content-Type', 'application/json')
     return res.json({
       message:
-        'The "Content-Type" header must be set for requests with a non-empty payload'
+        'The "Content-Type" header must be set for requests with a non-empty payload',
     })
   }
   return next()

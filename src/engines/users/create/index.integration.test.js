@@ -7,7 +7,7 @@ import create from '.'
 const db = new elasticsearch.Client({
   host: `${process.env.ELASTICSEARCH_PROTOCOL}://${
     process.env.ELASTICSEARCH_HOSTNAME
-  }:${process.env.ELASTICSEARCH_PORT}`
+  }:${process.env.ELASTICSEARCH_PORT}`,
 })
 
 describe('User Create Engine', function() {
@@ -25,8 +25,8 @@ describe('User Create Engine', function() {
         body: {
           email: 'e@ma.il',
           password: 'password',
-          profile: {}
-        }
+          profile: {},
+        },
       }
       create(req, db, createUserValidator, ValidationError).then(result => {
         assert.equal(result.result, 'created')

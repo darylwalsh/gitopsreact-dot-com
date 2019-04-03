@@ -3,7 +3,7 @@ function del(req, db) {
     .delete({
       index: process.env.ELASTICSEARCH_INDEX,
       type: 'user',
-      id: req.params.userId
+      id: req.params.userId,
     })
     .then(() => undefined)
     .catch(err => {

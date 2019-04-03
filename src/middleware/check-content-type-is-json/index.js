@@ -3,7 +3,7 @@ function checkContentTypeIsJson(req, res, next) {
     res.status(415)
     res.set('Content-Type', 'application/json')
     return res.json({
-      message: 'The "Content-Type" header must always be "application/json"'
+      message: 'The "Content-Type" header must always be "application/json"',
     })
   }
   return next()

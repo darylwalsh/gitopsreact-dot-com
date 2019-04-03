@@ -3,8 +3,8 @@ import NotFoundError from '../../errors/not-found'
 
 const GET_RESOLVE_OBJ = {
   _source: {
-    email: 'e@ma.il'
-  }
+    email: 'e@ma.il',
+  },
 }
 const GET_REJECT_NOT_FOUND_ERROR = new NotFoundError('Not Found')
 const GET_REJECT_ERROR = new Error()
@@ -18,7 +18,7 @@ const generate = {
   },
   failure() {
     return stub().returns(Promise.reject(GET_REJECT_ERROR))
-  }
+  },
 }
 
 export { generate as default, GET_RESOLVE_OBJ }

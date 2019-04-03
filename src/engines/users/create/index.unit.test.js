@@ -11,7 +11,7 @@ describe('User Create Engine', function() {
   beforeEach(function() {
     req = {}
     db = {
-      index: stub().resolves(dbIndexResult)
+      index: stub().resolves(dbIndexResult),
     }
   })
   describe('When invoked and validator returns with undefined', function() {
