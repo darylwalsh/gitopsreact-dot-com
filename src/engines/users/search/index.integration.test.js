@@ -46,9 +46,14 @@ describe('Engine - User - Search', function() {
     })
   })
   describe('When there are users that matches the search term', function() {
-    beforeEach(function() {
+    const client = new elasticsearch.Client({
+      host: `${process.env.ELASTICSEARCH_HOSTNAME}:${
+        process.env.ELASTICSEARCH_PORT
+      }`,
+    })
+    before(function() {
       // Creates a user with _id set to USER_ID
-      return db.index({
+      return client.index({
         index: process.env.ELASTICSEARCH_INDEX,
         type: 'user',
         id: USER_ID,
@@ -56,27 +61,52 @@ describe('Engine - User - Search', function() {
         refresh: 'true',
       })
     })
-    afterEach(function() {
-      return db.delete({
+    after(function() {
+      return client.delete({
         index: process.env.ELASTICSEARCH_INDEX,
         type: 'user',
         id: USER_ID,
-        refresh: 'true',
       })
     })
     describe('When the Elasticsearch operation is successful', function() {
-      beforeEach(function() {
-        promise = search(req, db, validator, ValidationError)
-        return promise
-      })
-      it('should return with a promise that resolves to an array', function() {
-        return promise.then(result => assert(Array.isArray(result)))
-      })
-      it('which is empty', function() {
-        return promise.then(result =>
-          assert.deepEqual(result[0], SEARCH_USER_OBJ)
-        )
+      it('should return with a promise that resolves to an object that matches USER_OBJ but without the digest field', function() {
+        assert.deepEqual(this.result[0], SEARCH_USER_OBJ)
+        assert.equal(this.error, undefined)
       })
     })
   })
+  // describe('When there are users that matches the search term', function() {
+  //   beforeEach(function() {
+  //     // Creates a user with _id set to USER_ID
+  //     return db.index({
+  //       index: process.env.ELASTICSEARCH_INDEX,
+  //       type: 'user',
+  //       id: USER_ID,
+  //       body: USER_OBJ,
+  //       refresh: 'true',
+  //     })
+  //   })
+  //   afterEach(function() {
+  //     return db.delete({
+  //       index: process.env.ELASTICSEARCH_INDEX,
+  //       type: 'user',
+  //       id: USER_ID,
+  //       refresh: 'true',
+  //     })
+  //   })
+  //   describe('When the Elasticsearch operation is successful', function() {
+  //     beforeEach(function() {
+  //       promise = search(req, db, validator, ValidationError)
+  //       return promise
+  //     })
+  //     it('should return with a promise that resolves to an array', function() {
+  //       return promise.then(result => assert(Array.isArray(result)))
+  //     })
+  //     it('which is empty', function() {
+  //       return promise.then(result =>
+  //         assert.deepEqual(result[0], SEARCH_USER_OBJ)
+  //       )
+  //     })
+  //   })
+  // })
 })
