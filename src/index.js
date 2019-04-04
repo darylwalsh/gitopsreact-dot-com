@@ -32,7 +32,7 @@ import searchUserHandler from './handlers/users/search'
 // Update Profile
 import updateProfileEngine from './engines/profile/update'
 import updateProfileValidator from './validators/profile/update'
-import updateUserHandler from './handlers/profile/update'
+import updateProfileHandler from './handlers/profile/update'
 
 // Replace Profile
 import replaceProfileEngine from './engines/profile/replace'
