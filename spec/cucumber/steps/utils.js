@@ -15,7 +15,7 @@ function getValidPayload(type, context = {}) {
     case 'update user profile':
       return {
         name: context.name || {
-          middle: 'barko',
+          middle: 'd4nyll',
         },
       }
     default:
