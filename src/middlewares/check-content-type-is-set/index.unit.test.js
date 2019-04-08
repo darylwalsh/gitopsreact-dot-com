@@ -1,10 +1,10 @@
-import assert from 'assert'
-import deepClone from 'lodash.clonedeep'
-import deepEqual from 'lodash.isequal'
-import { spy, stub } from 'sinon'
-import checkContentTypeIsSet from '.'
+import assert from "assert"
+import deepClone from "lodash.clonedeep"
+import deepEqual from "lodash.isequal"
+import { spy, stub } from "sinon"
+import checkContentTypeIsSet from "."
 
-describe('checkContentTypeIsSet', function() {
+describe("checkContentTypeIsSet", function() {
   let req
   let res
   let next
@@ -13,7 +13,7 @@ describe('checkContentTypeIsSet', function() {
     beforeEach(function() {
       req = {
         headers: {
-          'content-length': '0',
+          "content-length": "0",
         },
       }
       res = {}
@@ -22,21 +22,21 @@ describe('checkContentTypeIsSet', function() {
       checkContentTypeIsSet(req, res, next)
     })
 
-    it('should not modify res', function() {
+    it("should not modify res", function() {
       assert(deepEqual(res, clonedRes))
     })
 
-    it('should call next() once', function() {
+    it("should call next() once", function() {
       assert(next.calledOnce)
     })
   })
   describe('When the content-length header is not "0"', function() {
-    describe('and the content-type header is set', function() {
+    describe("and the content-type header is set", function() {
       beforeEach(function() {
         req = {
           headers: {
-            'content-length': '1',
-            'content-type': 'foo',
+            "content-length": "1",
+            "content-type": "foo",
           },
         }
         res = {}
@@ -45,22 +45,22 @@ describe('checkContentTypeIsSet', function() {
         checkContentTypeIsSet(req, res, next)
       })
 
-      it('should not modify res', function() {
+      it("should not modify res", function() {
         assert(deepEqual(res, clonedRes))
       })
 
-      it('should call next() once', function() {
+      it("should call next() once", function() {
         assert(next.calledOnce)
       })
     })
-    describe('and the content-type header is not set', function() {
+    describe("and the content-type header is not set", function() {
       let resJsonReturnValue
       let returnedValue
 
       beforeEach(function() {
         req = {
           headers: {
-            'content-length': '1',
+            "content-length": "1",
           },
         }
         resJsonReturnValue = {}
@@ -73,29 +73,29 @@ describe('checkContentTypeIsSet', function() {
         returnedValue = checkContentTypeIsSet(req, res, next)
       })
 
-      describe('should call res.status()', function() {
-        it('once', function() {
+      describe("should call res.status()", function() {
+        it("once", function() {
           assert(res.status.calledOnce)
         })
-        it('with the argument 400', function() {
+        it("with the argument 400", function() {
           assert(res.status.calledWithExactly(400))
         })
       })
 
-      describe('should call res.set()', function() {
-        it('once', function() {
+      describe("should call res.set()", function() {
+        it("once", function() {
           assert(res.set.calledOnce)
         })
         it('with the arguments "Content-Type" and "application/json"', function() {
-          assert(res.set.calledWithExactly('Content-Type', 'application/json'))
+          assert(res.set.calledWithExactly("Content-Type", "application/json"))
         })
       })
 
-      describe('should call res.json()', function() {
-        it('once', function() {
+      describe("should call res.json()", function() {
+        it("once", function() {
           assert(res.json.calledOnce)
         })
-        it('with the correct error object', function() {
+        it("with the correct error object", function() {
           assert(
             res.json.calledWithExactly({
               message:
@@ -105,11 +105,11 @@ describe('checkContentTypeIsSet', function() {
         })
       })
 
-      it('should return whatever res.json() returns', function() {
+      it("should return whatever res.json() returns", function() {
         assert.equal(returnedValue, resJsonReturnValue)
       })
 
-      it('should not call next()', function() {
+      it("should not call next()", function() {
         assert(next.notCalled)
       })
     })

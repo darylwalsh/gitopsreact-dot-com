@@ -11,7 +11,7 @@ Feature: Delete User by ID
     When the client creates a DELETE request to /users/:userId
     And sends the request
     Then our API should respond with a 200 HTTP status code
-
+    
     When the client creates a GET request to /users/:userId
     And sends the request
     Then our API should respond with a 404 HTTP status code

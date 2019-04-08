@@ -1,29 +1,29 @@
-import { stub } from 'sinon'
-import ValidationError from '../../../../../validators/errors/validation-error'
+import { stub } from "sinon"
+import ValidationError from "../../../../../validators/errors/validation-error"
 
 const SEARCH_USER_RESPONSE_OBJECT = [
   {
-    email: 'e@ma.il',
+    email: "e@ma.il",
     profile: {
       name: {
-        first: 'first',
-        last: 'last',
-        middle: 'middle',
+        first: "first",
+        last: "last",
+        middle: "middle",
       },
-      summary: 'Sample Summary 1',
-      bio: 'Sample Bio 1',
+      summary: "Sample Summary 1",
+      bio: "Sample Bio 1",
     },
   },
   {
-    email: 'foo@bar.baz',
+    email: "foo@bar.baz",
     profile: {
-      summary: 'Sample Summary 2',
-      bio: 'Sample Bio 2',
+      summary: "Sample Summary 2",
+      bio: "Sample Bio 2",
     },
   },
 ]
-const VALIDATION_ERROR_MESSAGE = 'VALIDATION_ERROR_MESSAGE'
-const GENERIC_ERROR_MESSAGE = 'Internal Server Error'
+const VALIDATION_ERROR_MESSAGE = "VALIDATION_ERROR_MESSAGE"
+const GENERIC_ERROR_MESSAGE = "Internal Server Error"
 const generate = () => ({
   success: stub().resolves(SEARCH_USER_RESPONSE_OBJECT),
   validationError: stub().rejects(

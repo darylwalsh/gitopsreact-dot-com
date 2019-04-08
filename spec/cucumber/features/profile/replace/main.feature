@@ -7,8 +7,8 @@ Feature: Replace User Profile by ID
 
   Scenario Outline: Bad Client Requests
 
-    If the client sends a PUT request to /users/:userId/profile with an unsupported payload, it
-    should receive a response with a 4xx HTTP status code.
+  If the client sends a PUT request to /users/:userId/profile with an unsupported payload, it
+  should receive a response with a 4xx HTTP status code.
 
     When the client creates a PUT request to /users/:userId/profile
     And attaches a generic <payloadType> payload
@@ -16,13 +16,13 @@ Feature: Replace User Profile by ID
     Then our API should respond with a <statusCode> HTTP status code
     And the payload of the response should be a JSON object
     And contains a message property which says <message>
-
+ 
     Examples:
 
-      | payloadType | statusCode | message                                                       |
-      | empty       | 400        | "Payload should not be empty"                                 |
-      | non-JSON    | 415        | "The "Content-Type" header must always be "application/json"" |
-      | malformed   | 400        | "Payload should be in JSON format"                            |
+    | payloadType | statusCode | message                                                       |
+    | empty       | 400        | "Payload should not be empty"                                 |
+    | non-JSON    | 415        | "The "Content-Type" header must always be "application/json"" |
+    | malformed   | 400        | "Payload should be in JSON format"                            |
 
   Scenario Outline: Payload with Additional Properties
 
@@ -35,9 +35,9 @@ Feature: Replace User Profile by ID
 
     Examples:
 
-      | additionalField | message                                                |
-      | foo             | The '.profile' object does not support the field 'foo' |
-      | foo, bar        | The '.profile' object does not support the field 'foo' |
+    | additionalField | message                                                |
+    | foo             | The '.profile' object does not support the field 'foo' |
+    | foo, bar        | The '.profile' object does not support the field 'foo' |
 
   Scenario Outline: Request Payload with Properties of Unsupported Type
     When the client creates a PUT request to /users/:userId/profile
@@ -48,14 +48,14 @@ Feature: Replace User Profile by ID
     And contains a message property which says "The '.profile.<field>' field must be of type <type>"
 
     Examples:
-      | field       | type   |
-      | bio         | string |
-      | summary     | string |
-      | name        | object |
-      | name.first  | string |
-      | name.middle | string |
-      | name.last   | string |
-
+    | field       | type   |
+    | bio         | string |
+    | summary     | string |
+    | name        | object |
+    | name.first  | string |
+    | name.middle | string |
+    | name.last   | string |
+  
   Scenario: Non-Existent User
     When the client creates a PUT request to /users/non-existent-user/profile
     And attaches a valid Replace User Profile payload
@@ -70,7 +70,7 @@ Feature: Replace User Profile by ID
     And sends the request
     Then our API should respond with a 200 HTTP status code
     And the payload of the response should be a string
-
+  
   Scenario Outline: Valid Profile
     When the client creates a PUT request to /users/:userId/profile
     And attaches <payload> as the payload
@@ -85,9 +85,9 @@ Feature: Replace User Profile by ID
 
     Examples:
 
-      | payload                                                                                |
-      | {"name":{}}                                                                            |
-      | {"name":{"first":"Daniel"}}                                                            |
-      | {"bio":"bio"}                                                                          |
-      | {"summary":"summary"}                                                                  |
-      | {"name":{"first":"Daniel","last":"Li","middle":"Foo"},"bio":"bio","summary":"summary"} |
+    | payload                                                                                |
+    | {"name":{}}                                                                            |
+    | {"name":{"first":"Daniel"}}                                                            |
+    | {"bio":"bio"}                                                                          |
+    | {"summary":"summary"}                                                                  |
+    | {"name":{"first":"Daniel","last":"Li","middle":"Foo"},"bio":"bio","summary":"summary"} |

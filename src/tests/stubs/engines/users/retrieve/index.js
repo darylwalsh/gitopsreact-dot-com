@@ -1,10 +1,10 @@
-import { stub } from 'sinon'
-import NotFoundError from '../../../elasticsearch/errors/not-found'
+import { stub } from "sinon"
+import NotFoundError from "../../../elasticsearch/errors/not-found"
 
 const RETRIEVE_USER_RESPONSE_OBJECT = {
-  email: 'e@ma.il',
+  email: "e@ma.il",
 }
-const GENERIC_ERROR_MESSAGE = 'Internal Server Error'
+const GENERIC_ERROR_MESSAGE = "Internal Server Error"
 const generate = () => ({
   success: stub().resolves(RETRIEVE_USER_RESPONSE_OBJECT),
   notFoundError: stub().rejects(new NotFoundError()),

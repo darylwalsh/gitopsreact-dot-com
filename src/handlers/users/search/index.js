@@ -3,13 +3,13 @@ function search(req, res, db, engine, validator, ValidationError) {
     .then(
       result => {
         res.status(200)
-        res.set('Content-Type', 'application/json')
+        res.set("Content-Type", "application/json")
         return res.json(result)
       },
       err => {
         if (err instanceof ValidationError) {
           res.status(400)
-          res.set('Content-Type', 'application/json')
+          res.set("Content-Type", "application/json")
           return res.json({ message: err.message })
         }
         throw err
@@ -17,8 +17,8 @@ function search(req, res, db, engine, validator, ValidationError) {
     )
     .catch(() => {
       res.status(500)
-      res.set('Content-Type', 'application/json')
-      return res.json({ message: 'Internal Server Error' })
+      res.set("Content-Type", "application/json")
+      return res.json({ message: "Internal Server Error" })
     })
 }
 

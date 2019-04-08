@@ -1,4 +1,4 @@
-import { stub } from 'sinon'
+import { stub } from "sinon"
 
 const ES_SEARCH_RESULTS = {
   took: 0,
@@ -14,33 +14,33 @@ const ES_SEARCH_RESULTS = {
     max_score: 1,
     hits: [
       {
-        _index: 'test',
-        _type: 'user',
-        _id: 'QrYj82EBkU56P7ZFzPef',
+        _index: "test",
+        _type: "user",
+        _id: "QrYj82EBkU56P7ZFzPef",
         _score: 1,
         _source: {
-          email: 'e@ma.il',
+          email: "e@ma.il",
           profile: {
             name: {
-              first: 'first',
-              last: 'last',
-              middle: 'middle',
+              first: "first",
+              last: "last",
+              middle: "middle",
             },
-            summary: 'Sample Summary 1',
-            bio: 'Sample Bio 1',
+            summary: "Sample Summary 1",
+            bio: "Sample Bio 1",
           },
         },
       },
       {
-        _index: 'test',
-        _type: 'user',
-        _id: 'QrYj82EBkU56P7ZFzPef',
+        _index: "test",
+        _type: "user",
+        _id: "QrYj82EBkU56P7ZFzPef",
         _score: 0.9,
         _source: {
-          email: 'foo@bar.baz',
+          email: "foo@bar.baz",
           profile: {
-            summary: 'Sample Summary 2',
-            bio: 'Sample Bio 2',
+            summary: "Sample Summary 2",
+            bio: "Sample Bio 2",
           },
         },
       },

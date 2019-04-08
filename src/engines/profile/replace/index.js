@@ -6,12 +6,12 @@ function replace(req, db, validator, ValidationError) {
   return db
     .update({
       index: process.env.ELASTICSEARCH_INDEX,
-      type: 'user',
+      type: "user",
       id: req.params.userId,
       body: {
         script: {
-          lang: 'painless',
-          source: 'ctx._source.profile = params.profile',
+          lang: "painless",
+          source: "ctx._source.profile = params.profile",
           params: {
             profile: req.body,
           },
@@ -21,9 +21,9 @@ function replace(req, db, validator, ValidationError) {
     .then(() => undefined)
     .catch(err => {
       if (err.status === 404) {
-        return Promise.reject(new Error('Not Found'))
+        return Promise.reject(new Error("Not Found"))
       }
-      return Promise.reject(new Error('Internal Server Error'))
+      return Promise.reject(new Error("Internal Server Error"))
     })
 }
 

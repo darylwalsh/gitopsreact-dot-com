@@ -5,24 +5,14 @@
   "description": "For validating client-provided user profile object when creating and/or updating an user",
   "type": "object",
   "properties": {
-    "bio": {
-      "type": "string"
-    },
-    "summary": {
-      "type": "string"
-    },
+    "bio": { "type": "string" },
+    "summary": { "type": "string" },
     "name": {
       "type": "object",
       "properties": {
-        "first": {
-          "type": "string"
-        },
-        "last": {
-          "type": "string"
-        },
-        "middle": {
-          "type": "string"
-        }
+        "first": { "type": "string" },
+        "last": { "type": "string" },
+        "middle": { "type": "string" }
       },
       "additionalProperties": false
     }

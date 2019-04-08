@@ -1,9 +1,9 @@
-import { stub } from 'sinon'
-import ValidationError from '../../../../../validators/errors/validation-error'
+import { stub } from "sinon"
+import ValidationError from "../../../../../validators/errors/validation-error"
 
-const VALIDATION_ERROR_MESSAGE = 'VALIDATION_ERROR_MESSAGE'
-const NOT_FOUND_ERROR_MESSAGE = 'Not Found'
-const GENERIC_ERROR_MESSAGE = 'Internal Server Error'
+const VALIDATION_ERROR_MESSAGE = "VALIDATION_ERROR_MESSAGE"
+const NOT_FOUND_ERROR_MESSAGE = "Not Found"
+const GENERIC_ERROR_MESSAGE = "Internal Server Error"
 const generate = () => ({
   success: stub().resolves(undefined),
   validationError: stub().rejects(

@@ -12,7 +12,7 @@ Feature: Search Users
     Then our API should respond with a 200 HTTP status code
     And the payload of the response should be an array
     And the response should contain 10 items
-
+    
   Scenario Outline: When there 10 or fewer users
     Given all documents of type "user" are deleted
     And <count> documents in the "javascript-experts" sample are added to the index with type "user"
@@ -23,12 +23,12 @@ Feature: Search Users
     And the payload of the response should be an array
     And the response should contain <count> items
 
-    Examples:
+  Examples:
 
-      | count |
-      | 0     |
-      | 5     |
-      | 10    |
+  | count |
+  | 0     |
+  | 5     |
+  | 10    |
 
   Scenario Outline: Results come back in the correct order if search term is given
 
@@ -39,9 +39,9 @@ Feature: Search Users
     And the payload of the response should be an array
     And the first item of the response should have property profile.name.first set to <firstName>
 
-    Examples:
+  Examples:
 
-      | searchTerm    | firstName |
-      | Norway        | Sindre    |
-      | Google Chrome | Paul      |
-      | Osmani        | Addy      |
+  | searchTerm      | firstName |
+  | Norway          | Sindre    |
+  | Web Performance | Paul      |
+  | Osmani          | Addy      |

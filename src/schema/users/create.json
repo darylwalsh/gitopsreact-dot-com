@@ -9,12 +9,8 @@
       "type": "string",
       "format": "email"
     },
-    "password": {
-      "type": "string"
-    },
-    "profile": {
-      "$ref": "profile.json#"
-    }
+    "password": { "type": "string" },
+    "profile": { "$ref": "profile.json#"}
   },
   "required": ["email", "password"],
   "additionalProperties": false

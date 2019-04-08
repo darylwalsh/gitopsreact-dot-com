@@ -1,6 +1,6 @@
 {
   "rules": {
-    "func-names": "off",
-    "prefer-arrow-callback": "off"
+      "func-names": "off",
+      "prefer-arrow-callback": "off"
   }
 }

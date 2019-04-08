@@ -1,7 +1,7 @@
-import { stub } from 'sinon'
-import ValidationError from '../../../validators/errors/validation-error'
+import { stub } from "sinon"
+import ValidationError from "../../../validators/errors/validation-error"
 
-const VALIDATION_ERROR_MESSAGE = 'VALIDATION_ERROR_MESSAGE'
+const VALIDATION_ERROR_MESSAGE = "VALIDATION_ERROR_MESSAGE"
 const VALIDATION_ERROR = new ValidationError(VALIDATION_ERROR_MESSAGE)
 function generate() {
   return {

@@ -5,18 +5,18 @@ function search(req, db, validator, ValidationError) {
   }
   const query = {
     index: process.env.ELASTICSEARCH_INDEX,
-    type: 'user',
-    _sourceExclude: 'password',
+    type: "user",
+    _sourceExclude: "password",
   }
 
-  if (req.query.query !== '') {
+  if (req.query.query !== "") {
     query.q = req.query.query
   }
 
   return db
     .search(query)
     .then(res => res.hits.hits.map(hit => hit._source))
-    .catch(() => Promise.reject(new Error('Internal Server Error')))
+    .catch(() => Promise.reject(new Error("Internal Server Error")))
 }
 
 export default search

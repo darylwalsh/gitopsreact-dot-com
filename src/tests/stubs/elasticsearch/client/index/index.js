@@ -1,8 +1,8 @@
-import { stub } from 'sinon'
+import { stub } from "sinon"
 
-const INDEX_RESOLVE_ID = 'INDEX_RESOLVE_ID'
+const INDEX_RESOLVE_ID = "INDEX_RESOLVE_ID"
 const INDEX_RESOLVE_OBJ = {
-  result: 'created',
+  result: "created",
   _id: INDEX_RESOLVE_ID,
 }
 

@@ -1,43 +1,37 @@
-import '@babel/polyfill'
-import express from 'express'
-import bodyParser from 'body-parser'
-import elasticsearch from 'elasticsearch'
+import "@babel/polyfill"
+import express from "express"
+import bodyParser from "body-parser"
+import elasticsearch from "elasticsearch"
 
-import checkEmptyPayload from './middleware/check-empty-payload'
-import checkContentTypeIsSet from './middleware/check-content-type-is-set'
-import checkContentTypeIsJson from './middleware/check-content-type-is-json'
-import errorHandler from './middleware/error-handler'
+import checkEmptyPayload from "./middlewares/check-empty-payload"
+import checkContentTypeIsSet from "./middlewares/check-content-type-is-set"
+import checkContentTypeIsJson from "./middlewares/check-content-type-is-json"
+import errorHandler from "./middlewares/error-handler"
 
-import injectHandlerDependencies from './utils/inject-handler-dependencies'
-import ValidationError from './validators/errors/validation-error'
+import injectHandlerDependencies from "./utils/inject-handler-dependencies"
+import ValidationError from "./validators/errors/validation-error"
 
-// Create User
-import createUserValidator from './validators/users/create'
-import createUserEngine from './engines/users/create'
-import createUserHandler from './handlers/users/create'
+// Validators
+import createUserValidator from "./validators/users/create"
+import searchUserValidator from "./validators/users/search"
+import replaceProfileValidator from "./validators/profile/replace"
+import updateProfileValidator from "./validators/profile/update"
 
-// Retrieve User
-import retrieveUserEngine from './engines/users/retrieve'
-import retrieveUserHandler from './handlers/users/retrieve'
+// Handlers
+import createUserHandler from "./handlers/users/create"
+import retrieveUserHandler from "./handlers/users/retrieve"
+import deleteUserHandler from "./handlers/users/delete"
+import searchUserHandler from "./handlers/users/search"
+import replaceProfileHandler from "./handlers/profile/replace"
+import updateProfileHandler from "./handlers/profile/update"
 
-// Delete User
-import deleteUserEngine from './engines/users/delete'
-import deleteUserHandler from './handlers/users/delete'
-
-// Search User
-import searchUserEngine from './engines/users/search'
-import searchUserValidator from './validators/users/search'
-import searchUserHandler from './handlers/users/search'
-
-// Update Profile
-import updateProfileEngine from './engines/profile/update'
-import updateProfileValidator from './validators/profile/update'
-import updateProfileHandler from './handlers/profile/update'
-
-// Replace Profile
-import replaceProfileEngine from './engines/profile/replace'
-import replaceProfileValidator from './validators/profile/replace'
-import replaceProfileHandler from './handlers/profile/replace'
+// Engines
+import createUserEngine from "./engines/users/create"
+import retrieveUserEngine from "./engines/users/retrieve"
+import deleteUserEngine from "./engines/users/delete"
+import searchUserEngine from "./engines/users/search"
+import replaceProfileEngine from "./engines/profile/replace"
+import updateProfileEngine from "./engines/profile/update"
 
 const handlerToEngineMap = new Map([
   [createUserHandler, createUserEngine],
@@ -68,7 +62,7 @@ app.use(checkContentTypeIsJson)
 app.use(bodyParser.json({ limit: 1e6 }))
 
 app.post(
-  '/users',
+  "/users",
   injectHandlerDependencies(
     createUserHandler,
     client,
@@ -78,7 +72,17 @@ app.post(
   )
 )
 app.get(
-  '/users/:userId',
+  "/users/",
+  injectHandlerDependencies(
+    searchUserHandler,
+    client,
+    handlerToEngineMap,
+    handlerToValidatorMap,
+    ValidationError
+  )
+)
+app.get(
+  "/users/:userId",
   injectHandlerDependencies(
     retrieveUserHandler,
     client,
@@ -88,7 +92,7 @@ app.get(
   )
 )
 app.delete(
-  '/users/:userId',
+  "/users/:userId",
   injectHandlerDependencies(
     deleteUserHandler,
     client,
@@ -97,18 +101,8 @@ app.delete(
     ValidationError
   )
 )
-app.get(
-  '/users/',
-  injectHandlerDependencies(
-    searchUserHandler,
-    client,
-    handlerToEngineMap,
-    handlerToValidatorMap,
-    ValidationError
-  )
-)
 app.put(
-  '/users/:userId/profile',
+  "/users/:userId/profile",
   injectHandlerDependencies(
     replaceProfileHandler,
     client,
@@ -118,7 +112,7 @@ app.put(
   )
 )
 app.patch(
-  '/users/:userId/profile',
+  "/users/:userId/profile",
   injectHandlerDependencies(
     updateProfileHandler,
     client,
@@ -127,6 +121,7 @@ app.patch(
     ValidationError
   )
 )
+
 app.use(errorHandler)
 
 const server = app.listen(process.env.SERVER_PORT, async () => {
@@ -139,7 +134,7 @@ const server = app.listen(process.env.SERVER_PORT, async () => {
   console.log(`Hobnob API server listening on port ${process.env.SERVER_PORT}!`)
 })
 
-process.on('SIGTERM', () => {
+process.on("SIGTERM", () => {
   server.close(() => {
     process.exit(0)
   })

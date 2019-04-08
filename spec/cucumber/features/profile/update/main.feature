@@ -4,11 +4,11 @@ Feature: Update User Profile
   Background: Create two Users and logs in with the first user's account
 
     Given 1 new users are created with random password and email
-
+  
   Scenario Outline: Bad Client Requests
 
-    If the client sends a PATCH request to /users/:userId/profile with an unsupported payload, it
-    should receive a response with a 4xx HTTP status code.
+  If the client sends a PATCH request to /users/:userId/profile with an unsupported payload, it
+  should receive a response with a 4xx HTTP status code.
 
     When the client creates a PATCH request to /users/:userId/profile
     And attaches a generic <payloadType> payload
@@ -16,13 +16,13 @@ Feature: Update User Profile
     Then our API should respond with a <statusCode> HTTP status code
     And the payload of the response should be a JSON object
     And contains a message property which says <message>
-
+ 
     Examples:
 
-      | payloadType | statusCode | message                                                       |
-      | empty       | 400        | "Payload should not be empty"                                 |
-      | non-JSON    | 415        | "The "Content-Type" header must always be "application/json"" |
-      | malformed   | 400        | "Payload should be in JSON format"                            |
+    | payloadType | statusCode | message                                                       |
+    | empty       | 400        | "Payload should not be empty"                                 |
+    | non-JSON    | 415        | "The "Content-Type" header must always be "application/json"" |
+    | malformed   | 400        | "Payload should be in JSON format"                            |
 
   Scenario Outline: Payload with Additional Properties
 
@@ -35,9 +35,9 @@ Feature: Update User Profile
 
     Examples:
 
-      | additionalField | message                                                |
-      | foo             | The '.profile' object does not support the field 'foo' |
-      | foo, bar        | The '.profile' object does not support the field 'foo' |
+    | additionalField | message                                                |
+    | foo             | The '.profile' object does not support the field 'foo' |
+    | foo, bar        | The '.profile' object does not support the field 'foo' |
 
   Scenario Outline: Request Payload with Properties of Unsupported Type
     When the client creates a PATCH request to /users/:userId/profile
@@ -48,14 +48,14 @@ Feature: Update User Profile
     And contains a message property which says "The '.profile.<field>' field must be of type <type>"
 
     Examples:
-      | field       | type   |
-      | bio         | string |
-      | summary     | string |
-      | name        | object |
-      | name.first  | string |
-      | name.middle | string |
-      | name.last   | string |
-
+    | field       | type   |
+    | bio         | string |
+    | summary     | string |
+    | name        | object |
+    | name.first  | string |
+    | name.middle | string |
+    | name.last   | string |
+  
   Scenario: Non-Existent User
     When the client creates a PATCH request to /users/non-existent-user/profile
     And attaches a valid Update User Profile payload
@@ -63,7 +63,7 @@ Feature: Update User Profile
     Then our API should respond with a 404 HTTP status code
     And the payload of the response should be a JSON object
     And the message property of the response should be a string with the value "Not Found"
-
+  
   Scenario Outline: Valid Profile
     When the client creates a PATCH request to /users/:userId/profile
     And attaches {"name":{"middle":"d4nyll"}} as the payload

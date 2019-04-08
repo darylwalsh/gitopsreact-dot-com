@@ -1,10 +1,10 @@
-import assert from 'assert'
-import deepClone from 'lodash.clonedeep'
-import deepEqual from 'lodash.isequal'
-import { spy, stub } from 'sinon'
-import checkContentTypeIsJson from '.'
+import assert from "assert"
+import deepClone from "lodash.clonedeep"
+import deepEqual from "lodash.isequal"
+import { spy, stub } from "sinon"
+import checkContentTypeIsJson from "."
 
-describe('checkContentTypeIsJson', function() {
+describe("checkContentTypeIsJson", function() {
   let req
   let res
   let next
@@ -16,7 +16,7 @@ describe('checkContentTypeIsJson', function() {
     beforeEach(function() {
       req = {
         headers: {
-          'content-type': 'application/xml',
+          "content-type": "application/xml",
         },
       }
       resJsonReturnValue = {}
@@ -28,29 +28,29 @@ describe('checkContentTypeIsJson', function() {
       next = spy()
       returnedValue = checkContentTypeIsJson(req, res, next)
     })
-    describe('should call res.status()', function() {
-      it('once', function() {
+    describe("should call res.status()", function() {
+      it("once", function() {
         assert(res.status.calledOnce)
       })
-      it('with the argument 415', function() {
+      it("with the argument 415", function() {
         assert(res.status.calledWithExactly(415))
       })
     })
 
-    describe('should call res.set()', function() {
-      it('once', function() {
+    describe("should call res.set()", function() {
+      it("once", function() {
         assert(res.set.calledOnce)
       })
       it('with the arguments "Content-Type" and "application/json"', function() {
-        assert(res.set.calledWithExactly('Content-Type', 'application/json'))
+        assert(res.set.calledWithExactly("Content-Type", "application/json"))
       })
     })
 
-    describe('should call res.json()', function() {
-      it('once', function() {
+    describe("should call res.json()", function() {
+      it("once", function() {
         assert(res.json.calledOnce)
       })
-      it('with the correct error object', function() {
+      it("with the correct error object", function() {
         assert(
           res.json.calledWithExactly({
             message:
@@ -60,11 +60,11 @@ describe('checkContentTypeIsJson', function() {
       })
     })
 
-    it('should return whatever res.json() returns', function() {
+    it("should return whatever res.json() returns", function() {
       assert.equal(returnedValue, resJsonReturnValue)
     })
 
-    it('should not call next()', function() {
+    it("should not call next()", function() {
       assert(next.notCalled)
     })
   })
@@ -73,7 +73,7 @@ describe('checkContentTypeIsJson', function() {
     beforeEach(function() {
       req = {
         headers: {
-          'content-type': 'application/json; charset=utf-8',
+          "content-type": "application/json; charset=utf-8",
         },
       }
       res = {}
@@ -81,11 +81,11 @@ describe('checkContentTypeIsJson', function() {
       next = spy()
       checkContentTypeIsJson(req, res, next)
     })
-    it('should not modify res', function() {
+    it("should not modify res", function() {
       assert(deepEqual(res, clonedRes))
     })
 
-    it('should call next() once', function() {
+    it("should call next() once", function() {
       assert(next.calledOnce)
     })
   })
