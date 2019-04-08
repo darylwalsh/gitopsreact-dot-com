@@ -13,7 +13,10 @@
       "type": "node",
       "request": "launch",
       "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/babel-node",
-      "runtimeArgs": ["--presets", "@babel/env"],
+      "runtimeArgs": [
+        "--presets",
+        "@babel/env"
+      ],
       "program": "${file}",
       "protocol": "inspector",
       "env": {
@@ -25,7 +28,9 @@
       "type": "node",
       "request": "launch",
       "runtimeExecutable": "~/.nvm/versions/node/v8.11.4/bin/node",
-      "runtimeArgs": ["--experimental-modules"],
+      "runtimeArgs": [
+        "--experimental-modules"
+      ],
       "program": "${file}",
       "protocol": "inspector"
     }

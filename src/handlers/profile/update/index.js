@@ -1,4 +1,4 @@
 // Same as replace handler
-import update from "../replace"
+import update from '../replace';
 
-export default update
+export default update;
