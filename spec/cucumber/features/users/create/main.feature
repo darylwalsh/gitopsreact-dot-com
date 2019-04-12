@@ -6,8 +6,8 @@ Feature: Create User
 
   Scenario Outline: Bad Client Requests
 
-  If the client sends a POST request to /users with an empty payload, it
-  should receive a response with a 4xx HTTP status code.
+    If the client sends a POST request to /users with an empty payload, it
+    should receive a response with a 4xx HTTP status code.
 
     When the client creates a POST request to /users
     And attaches a generic <payloadType> payload
@@ -15,13 +15,13 @@ Feature: Create User
     Then our API should respond with a <statusCode> HTTP status code
     And the payload of the response should be a JSON object
     And contains a message property which says <message>
- 
-  Examples:
 
-  | payloadType | statusCode | message                                                       |
-  | empty       | 400        | "Payload should not be empty"                                 |
-  | non-JSON    | 415        | 'The "Content-Type" header must always be "application/json"' |
-  | malformed   | 400        | "Payload should be in JSON format"                            |
+    Examples:
+
+      | payloadType | statusCode | message                                                       |
+      | empty       | 400        | "Payload should not be empty"                                 |
+      | non-JSON    | 415        | 'The "Content-Type" header must always be "application/json"' |
+      | malformed   | 400        | "Payload should be in JSON format"                            |
 
   Scenario Outline: Bad Request Payload
 
@@ -34,9 +34,9 @@ Feature: Create User
 
     Examples:
 
-    | missingFields | message                          |
-    | email         | The '.email' field is missing    |
-    | password      | The '.password' field is missing |
+      | missingFields | message                        |
+      | email         | The '.email' field is missing  |
+      | digest        | The '.digest' field is missing |
 
   Scenario Outline: Request Payload with Properties of Unsupported Type
 
@@ -49,9 +49,9 @@ Feature: Create User
 
     Examples:
 
-    | field    | type   |
-    | email    | string |
-    | password | string |
+      | field    | type   |
+      | email    | string |
+      | password | string |
 
   Scenario Outline: Request Payload with invalid email format
 
@@ -64,10 +64,25 @@ Feature: Create User
 
     Examples:
 
-    | email     |
-    | a238juqy2 |
-    | a@1.2.3.4 |
-    | a,b,c@!!  |
+      | email     |
+      | a238juqy2 |
+      | a@1.2.3.4 |
+      | a,b,c@!!  |
+
+  Scenario Outline: Request Payload with invalid digest format
+    When the client creates a POST request to /users
+    And attaches a Create User payload where the digest field is exactly <digest>
+    And sends the request
+    Then our API should respond with a 400 HTTP status code
+    And the payload of the response should be a JSON object
+    And contains a message property which says "The '.digest' field should be a valid bcrypt digest"
+
+    Examples:
+
+      | digest                                                       |
+      | jwnY3Iq1bpT5RTsAXKOLnr3ee423zWFU23efwXF27bVKJ4VrDmWA0hZi6YI0 |
+      | $2y$10$a7iPlM2ORVOPr0QNvDf.a.0QKEWwSGRKBaKSqv,40KFGcBuveazjW |
+      | #2y$10$a7iPlM2ORVOPr0QNvDf.a.0QKEWwSGRKBaKSqv.40KFGcBuveazjW |
 
   Scenario: Minimal Valid User
 
@@ -91,11 +106,11 @@ Feature: Create User
 
     Examples:
 
-    | payload                                                                          | message                                                   |
-    | {"email":"e@ma.il","password":"abc","profile":{"foo":"bar"}}                     | The '.profile' object does not support the field 'foo'    |
-    | {"email":"e@ma.il","password":"abc","profile":{"name":{"first":"Jane","a":"b"}}} | The '.profile.name' object does not support the field 'a' |
-    | {"email":"e@ma.il","password":"abc","profile":{"summary":0}}                     | The '.profile.summary' field must be of type string       |
-    | {"email":"e@ma.il","password":"abc","profile":{"bio":0}}                         | The '.profile.bio' field must be of type string           |
+      | payload                                                                          | message                                                   |
+      | {"email":"e@ma.il","password":"abc","profile":{"foo":"bar"}}                     | The '.profile' object does not support the field 'foo'    |
+      | {"email":"e@ma.il","password":"abc","profile":{"name":{"first":"Jane","a":"b"}}} | The '.profile.name' object does not support the field 'a' |
+      | {"email":"e@ma.il","password":"abc","profile":{"summary":0}}                     | The '.profile.summary' field must be of type string       |
+      | {"email":"e@ma.il","password":"abc","profile":{"bio":0}}                         | The '.profile.bio' field must be of type string           |
 
   Scenario Outline: Valid Profile
 
@@ -110,9 +125,9 @@ Feature: Create User
 
     Examples:
 
-    | payload                                                                         |
-    | {"email":"e@ma.il","password":"password","profile":{}}                          |
-    | {"email":"e@ma.il","password":"password","profile":{"name":{}}}                 |
-    | {"email":"e@ma.il","password":"password","profile":{"name":{"first":"Daniel"}}} |
-    | {"email":"e@ma.il","password":"password","profile":{"bio":"bio"}}               |
-    | {"email":"e@ma.il","password":"password","profile":{"summary":"summary"}}       |
+      | payload                                                                         |
+      | {"email":"e@ma.il","password":"password","profile":{}}                          |
+      | {"email":"e@ma.il","password":"password","profile":{"name":{}}}                 |
+      | {"email":"e@ma.il","password":"password","profile":{"name":{"first":"Daniel"}}} |
+      | {"email":"e@ma.il","password":"password","profile":{"bio":"bio"}}               |
+      | {"email":"e@ma.il","password":"password","profile":{"summary":"summary"}}       |
