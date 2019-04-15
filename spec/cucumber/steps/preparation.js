@@ -1,9 +1,9 @@
-import crypto from "crypto"
-import elasticsearch from "elasticsearch"
-import Chance from "chance"
-import jsonfile from "jsonfile"
-import { Given } from "cucumber"
-import { genSaltSync, hashSync } from "bcryptjs"
+import { genSaltSync, hashSync } from 'bcryptjs'
+import crypto from 'crypto'
+import elasticsearch from 'elasticsearch'
+import Chance from 'chance'
+import jsonfile from 'jsonfile'
+import { Given, Before } from 'cucumber'
 
 const chance = Chance()
 const client = new elasticsearch.Client({
@@ -12,15 +12,27 @@ const client = new elasticsearch.Client({
   }`,
 })
 
+Before(function() {
+  return client.indices
+    .delete({
+      index: process.env.ELASTICSEARCH_INDEX,
+    })
+    .then(() =>
+      client.indices.create({
+        index: process.env.ELASTICSEARCH_INDEX,
+      })
+    )
+})
+
 async function createUser() {
   const user = {}
   user.email = chance.email()
-  user.password = crypto.randomBytes(32).toString("hex")
+  user.password = crypto.randomBytes(32).toString('hex')
   user.salt = genSaltSync(10)
   user.digest = hashSync(user.password, user.salt)
   const result = await client.index({
     index: process.env.ELASTICSEARCH_INDEX,
-    type: "user",
+    type: 'user',
     body: {
       email: user.email,
       digest: user.digest,
@@ -44,6 +56,8 @@ Given(
     // Sets the first user as the default
     this.email = this.users[0].email
     this.password = this.users[0].password
+    this.salt = this.users[0].salt
+    this.digest = this.users[0].digest
     this.userId = this.users[0].id
   }
 )
@@ -82,7 +96,7 @@ Given(
     // refreshing the index to make sure it is immediately searchable in subsequent steps
     return client.bulk({
       body: operations,
-      refresh: "true",
+      refresh: 'true',
     })
   }
 )
