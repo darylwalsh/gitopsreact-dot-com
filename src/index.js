@@ -1,4 +1,5 @@
 import '@babel/polyfill'
+import fs from 'fs'
 import express from 'express'
 import bodyParser from 'body-parser'
 import elasticsearch from 'elasticsearch'
@@ -8,6 +9,7 @@ import { sign } from 'jsonwebtoken'
 import checkEmptyPayload from './middlewares/check-empty-payload'
 import checkContentTypeIsSet from './middlewares/check-content-type-is-set'
 import checkContentTypeIsJson from './middlewares/check-content-type-is-json'
+import authenticate from './middlewares/authenticate'
 import errorHandler from './middlewares/error-handler'
 
 // Utilities
@@ -20,6 +22,7 @@ import createUserValidator from './validators/users/create'
 import searchUserValidator from './validators/users/search'
 import replaceProfileValidator from './validators/profile/replace'
 import updateProfileValidator from './validators/profile/update'
+import loginValidator from './validators/auth/login'
 
 // Handlers
 import retrieveSaltHandler from './handlers/auth/salt/retrieve'
@@ -29,6 +32,7 @@ import deleteUserHandler from './handlers/users/delete'
 import searchUserHandler from './handlers/users/search'
 import replaceProfileHandler from './handlers/profile/replace'
 import updateProfileHandler from './handlers/profile/update'
+import loginHandler from './handlers/auth/login'
 
 // Engines
 import retrieveSaltEngine from './engines/auth/salt/retrieve'
@@ -38,8 +42,10 @@ import deleteUserEngine from './engines/users/delete'
 import searchUserEngine from './engines/users/search'
 import replaceProfileEngine from './engines/profile/replace'
 import updateProfileEngine from './engines/profile/update'
+import loginEngine from './engines/auth/login'
 
 const handlerToEngineMap = new Map([
+  [loginHandler, loginEngine],
   [retrieveSaltHandler, retrieveSaltEngine],
   [createUserHandler, createUserEngine],
   [retrieveUserHandler, retrieveUserEngine],
@@ -50,6 +56,7 @@ const handlerToEngineMap = new Map([
 ])
 
 const handlerToValidatorMap = new Map([
+  [loginHandler, loginValidator],
   [createUserHandler, createUserValidator],
   [searchUserHandler, searchUserValidator],
   [replaceProfileHandler, replaceProfileValidator],
@@ -66,8 +73,19 @@ const app = express()
 app.use(checkEmptyPayload)
 app.use(checkContentTypeIsSet)
 app.use(checkContentTypeIsJson)
+app.use(authenticate)
 app.use(bodyParser.json({ limit: 1e6 }))
-
+app.post(
+  '/login',
+  injectHandlerDependencies(
+    loginHandler,
+    client,
+    handlerToEngineMap,
+    handlerToValidatorMap,
+    ValidationError,
+    sign
+  )
+)
 app.get(
   '/salt',
   injectHandlerDependencies(

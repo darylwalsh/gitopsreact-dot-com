@@ -86,6 +86,8 @@
     "body-parser": "^1.18.3",
     "elasticsearch": "^15.1.1",
     "express": "^4.16.3",
-    "random-seed": "^0.3.0"
+    "jsonwebtoken": "^8.5.1",
+    "random-seed": "^0.3.0",
+    "special-escape": "^0.1.0"
   }
 }
