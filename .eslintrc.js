@@ -2,7 +2,7 @@ module.exports = {
   env: {
     es6: true,
     browser: true,
-    node: true
+    node: true,
   },
   extends: ['plugin:jest/recommended', 'jest-enzyme'],
   plugins: ['babel', 'import', 'jsx-a11y', 'react', 'prettier'],
@@ -11,11 +11,23 @@ module.exports = {
     ecmaVersion: 6,
     sourceType: 'module',
     ecmaFeatures: {
-      jsx: true
-    }
+      jsx: true,
+    },
   },
+  overrides: [
+    {
+      files: ['*.test.js'],
+      env: {
+        mocha: true,
+      },
+      rules: {
+        'func-names': 'off',
+        'prefer-arrow-callback': 'off',
+      },
+    },
+  ],
   rules: {
-    quotes: [2, 'single'],
+    quotes: [2, 'single', { allowTemplateLiterals: true }],
     strict: [2, 'never'],
     'comma-dangle': ['error', 'only-multiline'],
     indent: ['error', 2, { SwitchCase: 1, MemberExpression: 1 }],
@@ -31,8 +43,21 @@ module.exports = {
     'function-paren-newline': 'off', // Incompatible with prettier
     'no-plusplus': 'off',
     'space-before-function-paren': 0, // Incompatible with prettier
+    'no-underscore-dangle': 'off',
 
-    'max-len': ['error', 80, 2, { ignoreUrls: true }], // airbnb is allowing some edge cases
+    'max-len': [
+      'error',
+      100,
+      2,
+      {
+        ignoreUrls: true,
+        ignoreComments: true,
+        ignoreTrailingComments: true,
+        ignoreStrings: true,
+        ignoreTemplateLiterals: true,
+        ignoreRegExpLiterals: true,
+      },
+    ], // airbnb is allowing some edge cases
     'no-console': 'error', // airbnb is using warn
     'no-alert': 'error', // airbnb is using warn
 
@@ -52,17 +77,17 @@ module.exports = {
 
     'jsx-a11y/anchor-is-valid': [
       'error',
-      { components: ['Link'], specialLink: ['to'] }
+      { components: ['Link'], specialLink: ['to'] },
     ],
     'jsx-a11y/label-has-for': [
       2,
       {
         required: {
-          every: ['id']
-        }
-      }
+          every: ['id'],
+        },
+      },
     ], // for nested label htmlFor error
 
-    'prettier/prettier': ['error']
-  }
+    'prettier/prettier': ['error'],
+  },
 }
