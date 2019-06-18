@@ -42,7 +42,7 @@ describe('generateValidationErrorMessage', function() {
       'The ".test.path" field should be a valid bcrypt digest'
     assert.equal(actualErrorMessage, expectedErrorMessage)
   })
-  it('should return the correct string when error.keyword is "format", function() {
+  it('should return the correct string when error.keyword is "format"', function() {
     const errors = [
       {
         keyword: 'format',
