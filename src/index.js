@@ -64,9 +64,7 @@ const handlerToValidatorMap = new Map([
 ])
 
 const client = new elasticsearch.Client({
-  host: `${process.env.ELASTICSEARCH_PROTOCOL}://${
-    process.env.ELASTICSEARCH_HOSTNAME
-  }:${process.env.ELASTICSEARCH_PORT}`,
+  host: `${process.env.ELASTICSEARCH_PROTOCOL}://${process.env.ELASTICSEARCH_HOSTNAME}:${process.env.ELASTICSEARCH_PORT}`,
 })
 const app = express()
 app.use((req, res, next) => {
@@ -109,6 +107,18 @@ app.post(
     sign
   )
 )
+app.get('/openapi.yaml', (req, res, next) => {
+  fs.readFile(`${__dirname}/openapi.yaml`, (err, file) => {
+    if (err) {
+      res.status(500)
+      res.end()
+      return next()
+    }
+    res.write(file)
+    res.end()
+    return next()
+  })
+})
 app.get(
   '/salt',
   injectHandlerDependencies(
