@@ -67,30 +67,30 @@ const client = new elasticsearch.Client({
   host: `${process.env.ELASTICSEARCH_PROTOCOL}://${process.env.ELASTICSEARCH_HOSTNAME}:${process.env.ELASTICSEARCH_PORT}`,
 })
 const app = express()
-// app.use((req, res, next) => {
-//   const {
-//     SWAGGER_UI_PROTOCOL,
-//     SWAGGER_UI_HOSTNAME,
-//     SWAGGER_UI_PORT,
-//     CLIENT_PROTOCOL,
-//     CLIENT_HOSTNAME,
-//     CLIENT_PORT,
-//   } = process.env
-//   const allowedOrigins = [
-//     `${SWAGGER_UI_PROTOCOL}://${SWAGGER_UI_HOSTNAME}`,
-//     `${SWAGGER_UI_PROTOCOL}://${SWAGGER_UI_HOSTNAME}:${SWAGGER_UI_PORT}`,
-//     `${CLIENT_PROTOCOL}://${CLIENT_HOSTNAME}`,
-//     `${CLIENT_PROTOCOL}://${CLIENT_HOSTNAME}:${CLIENT_PORT}`,
-//   ]
-//   if (allowedOrigins.includes(req.headers.origin)) {
-//     res.setHeader('Access-Control-Allow-Origin', req.headers.origin)
-//   }
-//   res.header(
-//     'Access-Control-Allow-Headers',
-//     'Origin, X-Requested-With, Content-Type, Accept'
-//   )
-//   next()
-// })
+app.use((req, res, next) => {
+  const {
+    SWAGGER_UI_PROTOCOL,
+    SWAGGER_UI_HOSTNAME,
+    SWAGGER_UI_PORT,
+    CLIENT_PROTOCOL,
+    CLIENT_HOSTNAME,
+    CLIENT_PORT,
+  } = process.env
+  const allowedOrigins = [
+    `${SWAGGER_UI_PROTOCOL}://${SWAGGER_UI_HOSTNAME}`,
+    `${SWAGGER_UI_PROTOCOL}://${SWAGGER_UI_HOSTNAME}:${SWAGGER_UI_PORT}`,
+    `${CLIENT_PROTOCOL}://${CLIENT_HOSTNAME}`,
+    `${CLIENT_PROTOCOL}://${CLIENT_HOSTNAME}:${CLIENT_PORT}`,
+  ]
+  if (allowedOrigins.includes(req.headers.origin)) {
+    res.setHeader('Access-Control-Allow-Origin', req.headers.origin)
+  }
+  res.header(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept'
+  )
+  next()
+})
 app.use((req, res, next) => {
   res.header(
     'Access-Control-Allow-Origin',
