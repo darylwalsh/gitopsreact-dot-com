@@ -1,0 +1,7 @@
+*
+!src/**
+!package.json
+!yarn.lock
+!spec/openapi/hobnob.yaml
+!.babelrc
+!.env

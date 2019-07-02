@@ -211,7 +211,7 @@ const server = app.listen(process.env.SERVER_PORT, async () => {
     await client.indices.create(indexParams)
   }
   // eslint-disable-next-line no-console
-  console.log(`Hobnob API server listening on port ${process.env.SERVER_PORT}!`)
+  console.log(`GitOpsReact API server listening on port ${process.env.SERVER_PORT}!`)
 })
 
 process.on('SIGTERM', () => {
