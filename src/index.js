@@ -64,7 +64,9 @@ const handlerToValidatorMap = new Map([
 ])
 
 const client = new elasticsearch.Client({
-  host: `${process.env.ELASTICSEARCH_PROTOCOL}://${process.env.ELASTICSEARCH_HOSTNAME}:${process.env.ELASTICSEARCH_PORT}`,
+  host: `${process.env.ELASTICSEARCH_PROTOCOL}://${
+    process.env.ELASTICSEARCH_HOSTNAME
+  }:${process.env.ELASTICSEARCH_PORT}`,
 })
 const app = express()
 app.use((req, res, next) => {
@@ -94,7 +96,9 @@ app.use((req, res, next) => {
 app.use((req, res, next) => {
   res.header(
     'Access-Control-Allow-Origin',
-    `${process.env.SWAGGER_UI_PROTOCOL}://${process.env.SWAGGER_UI_HOSTNAME}:${process.env.SWAGGER_UI_PORT}`
+    `${process.env.SWAGGER_UI_PROTOCOL}://${process.env.SWAGGER_UI_HOSTNAME}:${
+      process.env.SWAGGER_UI_PORT
+    }`
   )
   res.header(
     'Access-Control-Allow-Headers',
@@ -211,7 +215,7 @@ const server = app.listen(process.env.SERVER_PORT, async () => {
     await client.indices.create(indexParams)
   }
   // eslint-disable-next-line no-console
-  console.log(`Hobnob API server listening on port ${process.env.SERVER_PORT}!`)
+  console.log(`GitOpsReact API server listening on port ${process.env.SERVER_PORT}!`)
 })
 
 process.on('SIGTERM', () => {

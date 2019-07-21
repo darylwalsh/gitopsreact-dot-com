@@ -1,4 +1,4 @@
-import { spy } from 'sinon';
+import { spy } from 'sinon'
 
 function generateResSpy() {
   return {
@@ -6,7 +6,7 @@ function generateResSpy() {
     set: spy(),
     json: spy(),
     send: spy(),
-  };
+  }
 }
 
-export default generateResSpy;
+export default generateResSpy
