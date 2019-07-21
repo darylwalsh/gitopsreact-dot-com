@@ -21,7 +21,7 @@ function replace(req, res, db, engine, validator, ValidationError) {
         res.set('Content-Type', 'application/json')
         return res.json({
           message:
-            'Permission Denied. Can only modify your own profile, not other users\'.',
+            'Permission Denied. Can only modify your own profile, not other users.',
         })
       }
       res.status(500)

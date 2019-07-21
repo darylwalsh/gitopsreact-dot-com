@@ -64,7 +64,9 @@ const handlerToValidatorMap = new Map([
 ])
 
 const client = new elasticsearch.Client({
-  host: `${process.env.ELASTICSEARCH_PROTOCOL}://${process.env.ELASTICSEARCH_HOSTNAME}:${process.env.ELASTICSEARCH_PORT}`,
+  host: `${process.env.ELASTICSEARCH_PROTOCOL}://${
+    process.env.ELASTICSEARCH_HOSTNAME
+  }:${process.env.ELASTICSEARCH_PORT}`,
 })
 const app = express()
 app.use((req, res, next) => {
@@ -94,7 +96,9 @@ app.use((req, res, next) => {
 app.use((req, res, next) => {
   res.header(
     'Access-Control-Allow-Origin',
-    `${process.env.SWAGGER_UI_PROTOCOL}://${process.env.SWAGGER_UI_HOSTNAME}:${process.env.SWAGGER_UI_PORT}`
+    `${process.env.SWAGGER_UI_PROTOCOL}://${process.env.SWAGGER_UI_HOSTNAME}:${
+      process.env.SWAGGER_UI_PORT
+    }`
   )
   res.header(
     'Access-Control-Allow-Headers',

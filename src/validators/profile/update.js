@@ -1,4 +1,4 @@
 // Same as replace
-import validate from './replace';
+import validate from './replace'
 
-export default validate;
+export default validate
