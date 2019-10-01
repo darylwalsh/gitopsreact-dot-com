@@ -40,16 +40,13 @@
     "start:run": "nodemon build/index.js",
     "start": "concurrently npm:start:*"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh: //git@github.com/darylwalsh/gitopsreact-dot-com.git"
-  },
+  "repository": "git@github.com:daryl-walsh/gitopsreact-dot-com.git",
   "author": "Daryl",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/darylwalsh/gitopsreact/issues"
+    "url": "https://github.com/daryl-walsh/gitopsreact/issues"
   },
-  "homepage": "https://github.com/darylwalsh/gitopsreact#readme",
+  "homepage": "https://github.com/daryl-walsh/gitopsreact#readme",
   "devDependencies": {
     "@babel/cli": "^7.0.0",
     "@babel/core": "^7.0.0",
