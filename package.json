@@ -1,6 +1,6 @@
 {
   "name": "gitopsreact",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "developing and deploying a react application using containers and a full CI/CD lifecycle",
   "main": "index.js",
   "scripts": {
