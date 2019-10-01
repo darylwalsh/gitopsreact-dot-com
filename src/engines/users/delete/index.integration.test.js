@@ -9,9 +9,7 @@ const USER_OBJ = {
 }
 
 const db = new elasticsearch.Client({
-  host: `${process.env.ELASTICSEARCH_PROTOCOL}://${
-    process.env.ELASTICSEARCH_HOSTNAME
-  }:${process.env.ELASTICSEARCH_PORT}`,
+  host: `${process.env.ELASTICSEARCH_PROTOCOL}://${process.env.ELASTICSEARCH_HOSTNAME}:${process.env.ELASTICSEARCH_PORT}`,
 })
 const req = {
   params: {

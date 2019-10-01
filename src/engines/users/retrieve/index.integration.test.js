@@ -3,9 +3,7 @@ import elasticsearch from 'elasticsearch'
 import retrieve from '.'
 
 const db = new elasticsearch.Client({
-  host: `${process.env.ELASTICSEARCH_PROTOCOL}://${
-    process.env.ELASTICSEARCH_HOSTNAME
-  }:${process.env.ELASTICSEARCH_PORT}`,
+  host: `${process.env.ELASTICSEARCH_PROTOCOL}://${process.env.ELASTICSEARCH_HOSTNAME}:${process.env.ELASTICSEARCH_PORT}`,
 })
 
 const USER_ID = 'TEST_USER_ID'

@@ -10,9 +10,7 @@ const USER_OBJ = {
   password: 'hunter2',
 }
 const db = new elasticsearch.Client({
-  host: `${process.env.ELASTICSEARCH_PROTOCOL}://${
-    process.env.ELASTICSEARCH_HOSTNAME
-  }:${process.env.ELASTICSEARCH_PORT}`,
+  host: `${process.env.ELASTICSEARCH_PROTOCOL}://${process.env.ELASTICSEARCH_HOSTNAME}:${process.env.ELASTICSEARCH_PORT}`,
 })
 
 describe('Engine - Profile - Replace', function() {
