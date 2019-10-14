@@ -12,13 +12,13 @@ echo -ne ' 10% [####                                    ] Downloading Elasticsea
 docker pull docker.elastic.co/elasticsearch/elasticsearch-oss:${ELASTICSEARCH_VERSION} > /dev/null
 # Get the Image ID for the Elasticsearch
 echo -ne ' 20% [########                                ] Retrieving Elasticsearch image ID         \r'
-ELASTICSEARCH_DOCKER_IMAGE_ID=$(docker images docker.elastic.co/elasticsearch/elasticsearch-oss --format '{{.ID}}')
+ELASTICSEARCH_DOCKER_IMAGE_ID=$(docker images docker.elastic.co/elasticsearch/elasticsearch --format '{{.ID}}')
 # Get all running containers using the ELasticsearch Docker image and remove them
 echo -ne ' 25% [##########                              ] Removing Existing Elasticsearch Containers\r'
 docker ps -a --filter "ancestor=${ELASTICSEARCH_DOCKER_IMAGE_ID}" --format '{{.ID}}' | xargs -I_cid -- bash -c 'docker stop _cid && docker rm _cid' > /dev/null
 # Run the Elasticsearch Docker image
 echo -ne ' 35% [##############                          ] Initiating Elasticsearch Container        \r'
-docker run --name elasticsearch -e "discovery.type=single-node" -d -p ${ELASTICSEARCH_PORT}:9200 -p 9300:9300 docker.elastic.co/elasticsearch/elasticsearch-oss:${ELASTICSEARCH_VERSION} > /dev/null
+docker run --name elasticsearch -e "discovery.type=single-node" -d -p ${ELASTICSEARCH_PORT}:9200 -p 9300:9300 docker.elastic.co/elasticsearch/elasticsearch:${ELASTICSEARCH_VERSION} > /dev/null
 
 # Polling to see if the Elasticsearch daemon is ready to receive a response
 TRIES=0

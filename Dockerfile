@@ -1,4 +1,4 @@
-FROM node:11 as builder 
+FROM node:10-alpine as builder
 
 USER node
 WORKDIR /home/node
@@ -9,10 +9,8 @@ COPY --chown=node:node . .
 RUN ["yarn", "run", "build"]
 RUN find . ! -name dist ! -name node_modules -maxdepth 1 -mindepth 1 -exec rm -rf {} \;
 
-FROM node:11
+FROM node:10-alpine
 USER node
 WORKDIR /home/node
 COPY --chown=node:node --from=builder /home/node .
 CMD ["node", "dist/index.js"]
-
-

@@ -116,3 +116,7 @@ dockerstatus.txt
 .jest/
 /.jest/
 /.jest/*
+do-deploy.txt
+.tool-versions
+podlogs.txt
+Dockerfilebup
