@@ -24,13 +24,13 @@ spec:
               name: docs
           env:
             - name: ELASTICSEARCH_HOSTNAME
-              value: 'http://elasticsearch'
+              value: 'elasticsearch'
             - name: ELASTICSEARCH_PORT
               value: '9200'
             - name: CLIENT_PROTOCOL
               value: 'http'
             - name: CLIENT_HOSTNAME
-              value: '127.0.0.1'
+              value: 'localhost'
             - name: CLIENT_PORT
               value: '8200'
             - name: SERVER_PROTOCOL
@@ -47,10 +47,6 @@ spec:
               value: '80'
             - name: ELASTICSEARCH_PROTOCOL
               value: 'http'
-            - name: ELASTICSEARCH_HOSTNAME
-              value: 'localhost'
-            - name: ELASTICSEARCH_PORT
-              value: '9200'
             - name: ELASTICSEARCH_INDEX
               value: 'gitopsreact'
             - name: SWAGGER_UI_PROTOCOL

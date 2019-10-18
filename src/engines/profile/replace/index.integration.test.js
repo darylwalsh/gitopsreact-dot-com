@@ -1,5 +1,6 @@
 import assert from 'assert'
 import elasticsearch from 'elasticsearch'
+// import { Client, ApiResponse, RequestParams } from '@elastic/elasticsearch'
 import ValidationError from '../../../validators/errors/validation-error'
 import validator from '../../../validators/profile/replace'
 import replace from '.'
@@ -9,8 +10,22 @@ const USER_OBJ = {
   email: 'e@ma.il',
   password: 'hunter2',
 }
-const db = new elasticsearch.Client({
-  host: `${process.env.ELASTICSEARCH_PROTOCOL}://${process.env.ELASTICSEARCH_HOSTNAME}:${process.env.ELASTICSEARCH_PORT}`,
+// const db = new elasticsearch.Client({
+//   host: `${process.env.ELASTICSEARCH_PROTOCOL}://${process.env.ELASTICSEARCH_HOSTNAME}:${process.env.ELASTICSEARCH_PORT}`,
+// })
+// var client = new elasticsearch.Client({
+//   host: `${process.env.ELASTICSEARCH_HOSTNAME}:${process.env.ELASTICSEARCH_PORT}`,
+//   log: 'trace',
+//   apiVersion: '7.4',
+// })
+// const client = new Client({
+//   node: `${process.env.ELASTICSEARCH_PROTOCOL}://${process.env.ELASTICSEARCH_HOSTNAME}:${process.env.ELASTICSEARCH_PORT}`,
+// })
+var client = new elasticsearch.Client({
+  // host: 'localhost:9200',
+  host: `${process.env.ELASTICSEARCH_HOSTNAME}:${process.env.ELASTICSEARCH_PORT}`,
+  log: 'trace',
+  apiVersion: process.env.ELASTICSEARCH_VERSION, // use the same version of your Elasticsearch instance
 })
 
 describe('Engine - Profile - Replace', function() {

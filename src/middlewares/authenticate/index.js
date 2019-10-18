@@ -4,10 +4,10 @@ function authenticate(req, res, next) {
   if (req.method === 'GET' || req.method === 'OPTIONS') {
     return next()
   }
-  if (req.method === 'POST' && req.path === '/users') {
+  if (req.method === 'POST' && req.path === '/users/') {
     return next()
   }
-  if (req.method === 'POST' && req.path === '/login') {
+  if (req.method === 'POST' && req.path === '/login/') {
     return next()
   }
   const authorization = req.get('Authorization')
@@ -46,6 +46,7 @@ function authenticate(req, res, next) {
     { algorithms: ['RS512'] },
     (err, decodedToken) => {
       if (err) {
+        console.log(err)
         if (
           err instanceof JsonWebTokenError &&
           err.message === 'invalid signature'
@@ -56,7 +57,7 @@ function authenticate(req, res, next) {
         }
         res.status(500)
         res.set('Content-Type', 'application/json')
-        return res.json({ message: 'Internal Server Error' })
+        return res.json({ message: err })
       }
       req.user = Object.assign({}, req.user, { id: decodedToken.sub })
       return next()

@@ -2,6 +2,7 @@
 !src/**
 !package.json
 !yarn.lock
-!spec/openapi/hobnob.yaml
+!spec/openapi/gitopsreact.yaml
 !.babelrc
 !.env
+!envs/.env

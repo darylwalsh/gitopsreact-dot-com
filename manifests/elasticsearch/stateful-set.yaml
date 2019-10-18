@@ -1,8 +1,9 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: gitopsreact-es-cluster
-  namespace: gitopsreact-es
+  name: elasticsearch
+  labels:
+    app: elasticsearch
 spec:
   replicas: 3
   serviceName: elasticsearch
@@ -59,24 +60,18 @@ spec:
             - name: data
               mountPath: /usr/share/elasticsearch/data
           env:
-            - name: node.name
-              valueFrom:
-                fieldRef:
-                  fieldPath: metadata.name
-            - name: discovery.seed_hosts
-              value: 'es-cluster-0.elasticsearch,es-cluster-1.elasticsearch,es-cluster-2.elasticsearch'
-            - name: cluster.initial_master_nodes
-              value: 'es-cluster-0,es-cluster-1,es-cluster-2'
+            - name: discovery.zen.ping.unicast.hosts
+              value: 'elasticsearch-0.elasticsearch.default.svc.cluster.local,elasticsearch-1.elasticsearch.default.svc.cluster.local,elasticsearch-2.elasticsearch.default.svc.cluster.local'
             - name: ES_JAVA_OPTS
-              value: '-Xms512m -Xmx512m'
-volumeClaimTemplates:
-  - metadata:
-      name: data
-      labels:
-        app: elasticsearch
-    spec:
-      accessModes: ['ReadWriteOnce']
-      storageClassName: do-block-storage
-      resources:
-        requests:
-          storage: 10Gi
+              value: '-Xms1g -Xmx1g'
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+        labels:
+          app: elasticsearch
+      spec:
+        accessModes: ['ReadWriteOnce']
+        storageClassName: do-block-storage
+        resources:
+          requests:
+            storage: 2Gi

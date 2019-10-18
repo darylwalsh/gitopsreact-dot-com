@@ -1,14 +1,28 @@
 import assert, { AssertionError } from 'assert'
 import { When, Then } from 'cucumber'
 import elasticsearch from 'elasticsearch'
+// import { Client, ApiResponse, RequestParams } from '@elastic/elasticsearch'
 import { decode } from 'jsonwebtoken'
 import objectPath from 'object-path'
 import { convertStringToArray } from './utils'
 
-const client = new elasticsearch.Client({
-  host: `${process.env.ELASTICSEARCH_HOSTNAME}:${
-    process.env.ELASTICSEARCH_PORT
-  }`,
+// const client = new elasticsearch.Client({
+//   host: `${process.env.ELASTICSEARCH_HOSTNAME}:${process.env.ELASTICSEARCH_PORT}`,
+// })
+
+//  var client = new elasticsearch.Client({
+//   host: `${process.env.ELASTICSEARCH_HOSTNAME}:${process.env.ELASTICSEARCH_PORT}`,
+//   log: 'trace',
+//   apiVersion: '7.4',
+// })
+// const client = new Client({
+//   node: `${process.env.ELASTICSEARCH_PROTOCOL}://${process.env.ELASTICSEARCH_HOSTNAME}:${process.env.ELASTICSEARCH_PORT}`,
+// })
+var client = new elasticsearch.Client({
+  // host: 'localhost:9200',
+  host: `${process.env.ELASTICSEARCH_HOSTNAME}:${process.env.ELASTICSEARCH_PORT}`,
+  log: 'trace',
+  apiVersion: process.env.ELASTICSEARCH_VERSION, // use the same version of your Elasticsearch instance
 })
 
 When(/^saves the response text in the context under ([\w.]+)$/, function(

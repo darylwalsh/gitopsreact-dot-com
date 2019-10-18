@@ -2,6 +2,7 @@ import '@babel/polyfill'
 import fs from 'fs'
 import express from 'express'
 import bodyParser from 'body-parser'
+//import { Client, ApiResponse, RequestParams } from '@elastic/elasticsearch'
 import elasticsearch from 'elasticsearch'
 import { getSalt } from 'bcryptjs'
 import { sign } from 'jsonwebtoken'
@@ -63,9 +64,24 @@ const handlerToValidatorMap = new Map([
   [updateProfileHandler, updateProfileValidator],
 ])
 
-const client = new elasticsearch.Client({
-  host: `${process.env.ELASTICSEARCH_PROTOCOL}://${process.env.ELASTICSEARCH_HOSTNAME}:${process.env.ELASTICSEARCH_PORT}`,
+// const client = new elasticsearch.Client({
+//   host: `${process.env.ELASTICSEARCH_PROTOCOL}://${process.env.ELASTICSEARCH_HOSTNAME}:${process.env.ELASTICSEARCH_PORT}`,
+// })
+// var client = new elasticsearch.Client({
+//   host: `${process.env.ELASTICSEARCH_HOSTNAME}:${process.env.ELASTICSEARCH_PORT}`,
+//   log: 'trace',
+//   apiVersion: '7.4',
+// })
+// const client = new Client({
+//   node: `${process.env.ELASTICSEARCH_PROTOCOL}://${process.env.ELASTICSEARCH_HOSTNAME}:${process.env.ELASTICSEARCH_PORT}`,
+// })
+var client = new elasticsearch.Client({
+  // host: 'localhost:9200',
+  host: `${process.env.ELASTICSEARCH_HOSTNAME}:${process.env.ELASTICSEARCH_PORT}`,
+  log: 'trace',
+  apiVersion: process.env.ELASTICSEARCH_VERSION,
 })
+
 const app = express()
 app.use((req, res, next) => {
   const {
@@ -83,7 +99,7 @@ app.use((req, res, next) => {
     `${CLIENT_PROTOCOL}://${CLIENT_HOSTNAME}:${CLIENT_PORT}`,
   ]
   if (allowedOrigins.includes(req.headers.origin)) {
-    res.setHeader('Access-Control-Allow-Origin', req.headers.origin)
+    res.setHeader('Access-Control-Allow-Origin', '*')
   }
   res.header(
     'Access-Control-Allow-Headers',
@@ -92,10 +108,7 @@ app.use((req, res, next) => {
   next()
 })
 app.use((req, res, next) => {
-  res.header(
-    'Access-Control-Allow-Origin',
-    `${process.env.SWAGGER_UI_PROTOCOL}://${process.env.SWAGGER_UI_HOSTNAME}:${process.env.SWAGGER_UI_PORT}`
-  )
+  res.header('Access-Control-Allow-Origin', '*')
   res.header(
     'Access-Control-Allow-Headers',
     'Origin, X-Requested-With, Content-Type, Accept'
@@ -108,7 +121,7 @@ app.use(checkContentTypeIsJson)
 app.use(authenticate)
 app.use(bodyParser.json({ limit: 1e6 }))
 app.post(
-  '/login',
+  '/login/',
   injectHandlerDependencies(
     loginHandler,
     client,
@@ -131,7 +144,7 @@ app.get('/openapi.yaml', (req, res, next) => {
   })
 })
 app.get(
-  '/salt',
+  '/salt/',
   injectHandlerDependencies(
     retrieveSaltHandler,
     client,
@@ -142,7 +155,7 @@ app.get(
   )
 )
 app.post(
-  '/users',
+  '/users/',
   injectHandlerDependencies(
     createUserHandler,
     client,
@@ -206,7 +219,11 @@ app.use(errorHandler)
 
 const server = app.listen(process.env.SERVER_PORT, async () => {
   const indexParams = { index: process.env.ELASTICSEARCH_INDEX }
+  console.log('check index')
+  console.log(indexParams)
   const indexExists = await client.indices.exists(indexParams)
+  console.log('check index exists')
+  console.log(indexExists)
   if (!indexExists) {
     await client.indices.create(indexParams)
   }

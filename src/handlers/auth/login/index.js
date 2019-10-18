@@ -6,6 +6,8 @@ function login(req, res, db, engine, validator, ValidationError, sign) {
       return res.send(result)
     })
     .catch(err => {
+      console.log('TEST ERROR')
+      console.log(err)
       res.set('Content-Type', 'application/json')
       if (err instanceof ValidationError) {
         res.status(400)
@@ -19,7 +21,7 @@ function login(req, res, db, engine, validator, ValidationError, sign) {
         })
       }
       res.status(500)
-      return res.json({ message: 'Internal Server Error' })
+      return res.json({ message: 'test' })
     })
 }
 

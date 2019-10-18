@@ -58,7 +58,7 @@ module.exports = {
         ignoreRegExpLiterals: true,
       },
     ], // airbnb is allowing some edge cases
-    'no-console': 'error', // airbnb is using warn
+    'no-console': 'off', // airbnb is using warn
     'no-alert': 'error', // airbnb is using warn
 
     'no-param-reassign': 'off', // Not our taste?
