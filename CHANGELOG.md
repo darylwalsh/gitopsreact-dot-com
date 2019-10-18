@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.7](https://github.com/daryl-walsh/gitopsreact-dot-com/compare/v0.1.6...v0.1.7) (2019-10-18)
+
+
+### Bug Fixes
+
+* **jwt_rsa:** switch  private key to rsa ([3f903d5](https://github.com/daryl-walsh/gitopsreact-dot-com/commit/3f903d5))
+
 ### [0.1.6](https://github.com/daryl-walsh/gitopsreact-dot-com/compare/v0.1.5...v0.1.6) (2019-10-14)
 
 
