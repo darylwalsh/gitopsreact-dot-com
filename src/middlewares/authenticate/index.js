@@ -1,4 +1,5 @@
 import { JsonWebTokenError, verify } from 'jsonwebtoken'
+import { keyClean } from '../../utils/key-clean'
 
 function authenticate(req, res, next) {
   if (req.method === 'GET' || req.method === 'OPTIONS') {
@@ -42,11 +43,10 @@ function authenticate(req, res, next) {
 
   verify(
     token,
-    process.env.PUBLIC_KEY,
+    keyClean(process.env.PUBLIC_KEY),
     { algorithms: ['RS512'] },
     (err, decodedToken) => {
       if (err) {
-        console.log(err)
         if (
           err instanceof JsonWebTokenError &&
           err.message === 'invalid signature'
