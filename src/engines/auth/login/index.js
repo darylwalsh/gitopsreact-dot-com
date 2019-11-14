@@ -44,9 +44,13 @@ function loginUser(req, db, validator, ValidationError, sign) {
       if (res.hits.total > 0) {
         const payload = { sub: res.hits.hits[0]._id }
         const options = { algorithm: 'RS512' }
+        console.log(process.env.PRIVATE_KEY)
         const privateKeyClean = process.env.PRIVATE_KEY.replace(/\\n/g, '\n')
-        //console.log(process.env.PRIVATE_KEY)
-        const token = sign(payload, privateKeyClean, options)
+        console.log(privateKeyClean)
+        const privateKeyCleanQuotes = privateKeyClean.replace(/(^")|("$)/g, '')
+
+        console.log(privateKeyCleanQuotes)
+        const token = sign(payload, privateKeyCleanQuotes, options)
         return token
       }
       return Promise.reject(new Error('Not Found'))
