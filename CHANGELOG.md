@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.10](https://github.com/daryl-walsh/gitopsreact-dot-com/compare/v0.1.8...v0.1.10) (2019-11-14)
+
+
+### Bug Fixes
+
+* **merge:** reconcile fork repo ([f723b0b](https://github.com/daryl-walsh/gitopsreact-dot-com/commit/f723b0b))
+
+
+### Features
+
+* **docker:** update docker env ([e317c5c](https://github.com/daryl-walsh/gitopsreact-dot-com/commit/e317c5c))
+
 ### [0.1.9](https://github.com/daryl-walsh/gitopsreact-dot-com/compare/v0.1.8...v0.1.9) (2019-10-24)
 
 ### [0.1.8](https://github.com/daryl-walsh/gitopsreact-dot-com/compare/v0.1.7...v0.1.8) (2019-10-24)
