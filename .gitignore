@@ -107,6 +107,7 @@ node_modules/*
 /node_modules/
 .vscode
 .vscode/
+/.vscode/*
 .reference
 .reference/
 terraform.tfvars
@@ -126,3 +127,8 @@ keys/
 keys/*
 /keys/*
 manifests/
+esdata/
+data/
+data
+data/*
+/data/

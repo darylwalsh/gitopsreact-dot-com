@@ -43,10 +43,6 @@
   "repository": "git@github.com:daryl-walsh/gitopsreact-dot-com.git",
   "author": "Daryl",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/daryl-walsh/gitopsreact/issues"
-  },
-  "homepage": "https://github.com/daryl-walsh/gitopsreact#readme",
   "devDependencies": {
     "@babel/cli": "^7.0.0",
     "@babel/core": "^7.0.0",
