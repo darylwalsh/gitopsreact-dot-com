@@ -106,7 +106,7 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
-    "ajv": "^6.5.3",
+    "ajv": "^6.12.3",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "elasticsearch": "^15.1.1",
